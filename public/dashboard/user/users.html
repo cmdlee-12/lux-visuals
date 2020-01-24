@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Seeing the Signs</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Datatables -->
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!-- Animate css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../src/css/global.css">
+    <link rel="stylesheet" href="../src/css/custom.css">
+    <link rel="stylesheet" href="../src/css/forms.css">
+    <link rel="stylesheet" href="../src/css/media-queries.css">
+    <link rel="stylesheet" href="../src/css/typography.css">
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="../src/css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <nav class="navbar navbar-expand navbar-dark static-top">
+        <a class="navbar-brand mr-1" href="../../index.html">Lux Visuals</a>
+        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Navbar -->
+        <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-fw"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="user-profile.html">Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="manage-projects.html" data-toggle="modal" data-target=".report-incident">
+                    <i class="fas fa-plus-square"></i>
+                    <span>Report an Incident</span></a>
+                <div class="modal fade report-incident" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6>Report an Incident</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <!-- type of report -->
+                                    <div class="row">
+                                        <div class="col-lg-4 d-none user-select-form">
+                                            <label for="user">User</label>
+                                            <select name="user" id="user" class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="typeOfReport">Type of Report</label>
+                                                <select name="typeOfReport" id="typeOfReport" class="form-control">
+                                                    <option value="Cat calling">Cat calling</option>
+                                                    <option value="Groping">Groping</option>
+                                                    <option value="Wolf whistling">Wolf whistling</option>
+                                                    <option value="Public indecency">Public indecency</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- location -->
+                                    <div class="row mb-3">
+                                        <div class="col-lg-12">
+                                            <span>Location</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <select name="street" id="street" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <select name="barangay" id="barangay" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <input type="text" name="city" id="city" placeholder="Pasig City"
+                                                    class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- date -->
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <span><strong>Schedule your appointment</strong></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="date">Date</label>
+                                                <input type="date" name="date" id="date" placeholder="date"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="time">Time</label>
+                                                <input type="time" name="time" id="time" placeholder="time"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- description of report-->
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="descriptionOfReport">Description</label>
+                                                <textarea name="descriptionOfReport" id="descriptionOfReport" cols="30"
+                                                    rows="5" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary btn-submit-report">Submit Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="reports.html">
+                    <i class="fas fa-eye"></i>
+                    <span>View Reports</span></a>
+            </li>
+            <li class="nav-item" id="tasks">
+                <a class="nav-link" href="appointment.html">
+                    <i class="fas fa-calendar-plus"></i>
+                    <span>Appointments</span></a>
+            </li>
+            <li class="nav-item d-none active" id="users">
+                <a class="nav-link" href="users.html">
+                    <i class="fas fa-users"></i>
+                    <span>Users</span></a>
+            </li>
+        </ul>
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Users</a>
+                    </li>
+                    <li class="breadcrumb-item active">Overview</li>
+                </ol>
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <table class="table" id="userTable">
+                            <thead class="table-warning">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © Lux Visuals 2018</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary logoutUser" href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script>
+    //check session
+    var storageUser = localStorage.getItem("site_username");
+    var siteRole = localStorage.getItem("site_role");
+
+    if (storageUser == undefined) {
+        window.location = "../../index.html";
+    } else {
+        if (siteRole == "User") {
+        $(".user-select-form").addClass("d-none");
+        $(".user-select-form").removeClass("d-block");
+
+        $("#users").addClass("d-none");
+        $("#users").removeClass("d-block");
+        } else {
+        $(".user-select-form").removeClass("d-none");
+        $(".user-select-form").addClass("d-block");
+
+        $("#users").addClass("d-block");
+        $("#users").removeClass("d-none");
+        }
+    }
+</script>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/e31d332ef2.js" crossorigin="anonymous"></script>
+<!-- Swal -->
+<!-- Datatable -->
+<script src="http://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
+<script>
+    // Set the configuration for your app
+    // TODO: Replace with your project's config object
+    var config = {
+        apiKey: "AIzaSyAq5CebiiEZANlNLlrp685A4uxpUaMCDnI",
+        authDomain: "lux-visuals.firebaseapp.com",
+        databaseURL: "https://lux-visuals.firebaseio.com",
+        projectId: "lux-visuals",
+        storageBucket: "lux-visuals.appspot.com",
+        messagingSenderId: "621910592611",
+        appId: "1:621910592611:web:89eee636ee700265d0bc56",
+        measurementId: "G-2PGGTQF0RM"
+    };
+    firebase.initializeApp(config);
+
+    // Get a reference to the database service
+    var database = firebase.database();
+</script>
+<script src="../src/js/custom.js"></script>
+<script src="../src/js/functions.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="../vendor/jquery/jquery.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Page level plugin JavaScript-->
+<script src="../vendor/datatables/jquery.dataTables.js"></script>
+<script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="../src/js/sb-admin.min.js"></script>
+
+</html>

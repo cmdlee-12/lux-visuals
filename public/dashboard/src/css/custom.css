@@ -1,0 +1,85 @@
+/* Login */
+.section-login{
+    height: 100vh;
+    background-image: url('../img/banner/coworking.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* opacity: rgba(76,175,80, 0.3) */
+    position: relative;
+}
+.overlay-bg{
+    position: absolute;
+    background-color: rgba(193,185,196, 0.6);
+    width: 100%;
+    height: 100vh;
+}
+  
+.card-wrapper {
+    background: transparent;
+    -webkit-box-shadow: 7px 6px 21px -8px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 6px 21px -8px rgba(0,0,0,0.75);
+    box-shadow: 7px 6px 21px -8px rgba(0,0,0,0.75);
+}
+
+.section-login .container-fluid {
+    position: absolute;
+    top: 50%;
+    right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* Inner Pages */
+.project-wrapper .btn-view,
+.user-wrapper .btn-view {
+    color: #fff;
+    padding-left: 0;
+}
+
+.project-wrapper .fas.fa-tasks,
+.project-wrapper .fas.fa-edit{
+    font-size: 18px;
+}
+
+.unshowNav{
+    display: none;
+}
+
+form .update-wrapper{
+    display: none;
+}
+
+form .show{
+    display: block;
+}
+
+button.btn-danger{
+    background: rgb(214,102,88);
+    border: rgb(214,102,88);
+}
+
+.card-status__wrapper {
+    height: 100%;
+    background: #F4F5F7;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+button.btn.card-task {
+    background: #deebff;
+    padding: 15px 10px;
+    width: 100%;
+    text-align: left;
+}
+
+.card-status__body {
+    margin: 10px 0px;
+}
+
+.sidebar li.nav-item a.nav-link span:hover,
+.sidebar li.nav-item a.nav-link i:hover,
+.sidebar li.nav-item a.nav-link:hover,
+.sidebar li.nav-item:hover  {
+    color: #ffb400;
+}
+

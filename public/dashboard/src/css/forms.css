@@ -1,0 +1,21 @@
+.form-control {
+    background: transparent;
+    border-bottom: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+}
+
+.section-login form label {
+    color: #fff;
+    font-size: 20px;
+}
+
+.input-group input[type="password"] {
+    border-right: 0;
+}
+
+span.input-group-text {
+    border-left: 0;
+}
