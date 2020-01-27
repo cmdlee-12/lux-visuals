@@ -208,15 +208,14 @@
             <div class="item">
               <div class="testimony-wrap pb-4">
                 <div class="text">
-                  <p class="mb-4">Uses written words in various styles and techniques to communicate ideas. Tells a
-                    story in such a way that he holds your attention within the first couple paragraphs.</p>
+                  <p class="mb-4" id="about-content-1"></p>
                 </div>
                 <div class="d-flex">
-                  <div class="user-img" style="background-image: url(images/Kristen.jpg)">
-                  </div>
                   <div class="pos ml-3">
-                    <p class="name">Kristen Disu</p>
-                    <span class="position">Writer</span>
+                    <p class="name" id="about-name-1"></p>
+                    <span class="position" id="about-role-1"></span>
+                  </div>
+                  <div class="user-img">
                   </div>
                 </div>
               </div>
@@ -224,16 +223,14 @@
             <div class="item">
               <div class="testimony-wrap pb-4">
                 <div class="text">
-                  <p class="mb-4">Using motion to bring characters and more to life within films. Responsible for giving
-                    objects weight & timing that result in the object feeling like it truly exists in the world we see
-                    it in.</p>
+                  <p class="mb-4" id="about-content-2"></p>
                 </div>
                 <div class="d-flex">
-                  <div class="user-img" style="background-image: url(images/Alfred.png)">
-                  </div>
                   <div class="pos ml-3">
-                    <p class="name">Alfred Duga</p>
-                    <span class="position">3D Animator</span>
+                    <p class="name" id="about-name-2"></p>
+                    <span class="position" id="about-role-2"></span>
+                  </div>
+                  <div class="user-img">
                   </div>
                 </div>
               </div>
@@ -241,15 +238,14 @@
             <div class="item">
               <div class="testimony-wrap pb-4">
                 <div class="text">
-                  <p class="mb-4">Has the overall responsibility for the successful initiation, planning, design,
-                    execution, monitoring, controlling and closure of a project.</p>
+                  <p class="mb-4" id="about-content-3"></p>
                 </div>
                 <div class="d-flex">
-                  <div class="user-img" style="background-image: url(images/Joshua.jpg)">
-                  </div>
                   <div class="pos ml-3">
-                    <p class="name">Joshua Macatangay</p>
-                    <span class="position">Project Manager</span>
+                    <p class="name" id="about-name-3"></p>
+                    <span class="position" id="about-role-3"></span>
+                  </div>
+                  <div class="user-img">
                   </div>
                 </div>
               </div>
@@ -257,15 +253,14 @@
             <div class="item">
               <div class="testimony-wrap pb-4">
                 <div class="text">
-                  <p class="mb-4">Creates visual concepts, by hand or computer software, to communicate ideas that
-                    inspire or captivate consumers. Develops the overall layout and production design.</p>
+                  <p class="mb-4" id="about-content-4"></p>
                 </div>
                 <div class="d-flex">
-                  <div class="user-img" style="background-image: url(images/Enrique.jpg)">
-                  </div>
                   <div class="pos ml-3">
-                    <p class="name">Enrique Sacay</p>
-                    <span class="position">Graphic Artist</span>
+                    <p class="name" id="about-name-4"></p>
+                    <span class="position" id="about-role-4"></span>
+                  </div>
+                  <div class="user-img">
                   </div>
                 </div>
               </div>
@@ -273,15 +268,14 @@
             <div class="item">
               <div class="testimony-wrap pb-4">
                 <div class="text">
-                  <p class="mb-4">Writes, tests, debugs computer software or applications by giving the computer
-                    specific programming instructions. Also conceive, design, and test logical structures.</p>
+                  <p class="mb-4" id="about-content-5"></p>
                 </div>
                 <div class="d-flex">
-                  <div class="user-img" style="background-image: url(images/Nichole.png)">
-                  </div>
                   <div class="pos ml-3">
-                    <p class="name">Nichole Tolentino</p>
-                    <span class="position">Programmer</span>
+                    <p class="name" id="about-name-5"></p>
+                    <span class="position" id="about-role-5"></span>
+                  </div>
+                  <div class="user-img">
                   </div>
                 </div>
               </div>
@@ -376,6 +370,30 @@
   </script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
+  <script>
+    // Set the configuration for your app
+    // TODO: Replace with your project's config object
+    var config = {
+      apiKey: "AIzaSyAq5CebiiEZANlNLlrp685A4uxpUaMCDnI",
+      authDomain: "lux-visuals.firebaseapp.com",
+      databaseURL: "https://lux-visuals.firebaseio.com",
+      projectId: "lux-visuals",
+      storageBucket: "lux-visuals.appspot.com",
+      messagingSenderId: "621910592611",
+      appId: "1:621910592611:web:89eee636ee700265d0bc56",
+      measurementId: "G-2PGGTQF0RM"
+    };
+    firebase.initializeApp(config);
+
+    // Get a reference to the database service
+    var database = firebase.database();
+  </script>
+  <script src="js/custom.js"></script>
+  <script src="js/functions.js"></script>
 </body>
 
 </html>

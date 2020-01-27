@@ -629,6 +629,213 @@ var viewUsers = function(){
   });
 }
 
+var createBlog = function(){
+  $("#frm-create-blog").submit(function(e){
+    var formData = $(this).serialize();
+    var root = firebase.database().ref().child("Blogs");
+    var key = root.push().key;
+    var heading = $("#blog-heading").val();
+    var content = $("#blog-content").val();
+    var link = $("#blog-link").val();
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    root.child(key).child("blogID").set(key);
+    root.child(key).child("heading").set(heading);
+    root.child(key).child("content").set(content);
+    root.child(key).child("link").set(link);
+    root.child(key).child("date_posted").set(dateTime);
+    Swal.fire(
+      'Good job!',
+      'You added a new blog!',
+      'success'
+    );
+    console.log(formData);
+  });
+}
+var viewBlogs = function(){
+  var table = $('#blogsTable').DataTable();
+  var rootRef = firebase.database().ref().child("Blogs");
+  rootRef.on("child_added", snap => {
+    var dataSet = [snap.child("blogID").val(),snap.child("heading").val(),
+    snap.child("content").val(), snap.child("link").val(), snap.child("date_posted").val()];
+      table.rows.add([dataSet]).draw();
+  });
+}
+
+var updateContact = function(){
+  
+  $("#frm-contact").submit(function(e){
+    e.preventDefault();
+    var root = firebase.database().ref().child("CMS/Contact");
+    var contact = {
+      address : $("#contact-address").val(),
+      email : $("#contact-email").val(),
+      contact_number : $("#contact-contact_number").val(),
+      website : $("#contact-website").val(),
+    };
+    root.child('address').set(contact.address);
+    root.child('email').set(contact.email);
+    root.child('contact_number').set(contact.contact_number);
+    root.child('website').set(contact.website);
+    Swal.fire(
+      'Good job!',
+      'You updated the contact page!',
+      'success'
+    );
+  });
+}
+
+var getContact = function(){
+  var root = firebase.database().ref().child("CMS/Contact");
+  var contact = {};
+  root.on("value", snap =>{
+    contact = snap.val();
+    $("#contact-address").val(contact.address);
+    $("#contact-email").val(contact.email);
+    $("#contact-contact_number").val(contact.contact_number);
+    $("#contact-website").val(contact.website);
+    // console.log(contact.address);
+  });
+  
+}
+
+var createCauses = function(){
+  $("#frm-create-cause").submit(function(e){
+    
+    var formData = $(this).serialize();
+    var root = firebase.database().ref().child("CMS/Cause");
+    var key = root.push().key;
+    var heading = $("#cause-heading").val();
+    var content = $("#cause-content").val();
+    var link = $("#cause-link").val();
+    var isactive = $("#cause-is_active").val();
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    root.child(key).child("cause_id").set(key);
+    root.child(key).child("heading").set(heading);
+    root.child(key).child("content").set(content);
+    root.child(key).child("link").set(link);
+    root.child(key).child("is_active").set(isactive);
+    root.child(key).child("created_at").set(dateTime);
+    
+    Swal.fire(
+      'Good job!',
+      'You added a new cause!',
+      'success'
+    );
+  });
+}
+var viewCause = function(){
+  var table = $('#causeTable').DataTable();
+  var rootRef = firebase.database().ref().child("CMS/Cause");
+  rootRef.on("child_added", snap => {
+    var dataSet = [snap.child("cause_id").val(),snap.child("heading").val(),
+    snap.child("content").val(), snap.child("link").val(), snap.child("is_active").val(),snap.child("created_at").val()];
+      table.rows.add([dataSet]).draw();
+  });
+}
+
+
+var updateAbout = function(){
+  
+  $("#frm-about").submit(function(e){
+    e.preventDefault();
+    var root = firebase.database().ref().child("CMS/About");
+    var about = {
+      mission : $("#about-mission").val(),
+      vision : $("#about-vision").val(),
+      person_1 : {
+        name : $("#about-name-1").val(),
+        role : $("#about-role-1").val(),
+        content : $("#about-content-1").val(),
+      },
+      person_2 : {
+        name : $("#about-name-2").val(),
+        role : $("#about-role-2").val(),
+        content : $("#about-content-2").val(),
+      },
+      person_3 : {
+        name : $("#about-name-3").val(),
+        role : $("#about-role-3").val(),
+        content : $("#about-content-3").val(),
+      },
+      person_4 : {
+        name : $("#about-name-4").val(),
+        role : $("#about-role-4").val(),
+        content : $("#about-content-4").val(),
+      },
+      person_5 : {
+        name : $("#about-name-5").val(),
+        role : $("#about-role-5").val(),
+        content : $("#about-content-5").val(),
+      },
+    };
+    root.child('mission').set(about.mission);
+    root.child('vision').set(about.vision);
+    root.child('person_1').child('name').set(about.person_1.name);
+    root.child('person_1').child('role').set(about.person_1.role);
+    root.child('person_1').child('content').set(about.person_1.content);
+    
+    root.child('person_2').child('name').set(about.person_2.name);
+    root.child('person_2').child('role').set(about.person_2.role);
+    root.child('person_2').child('content').set(about.person_2.content);
+    
+    root.child('person_3').child('name').set(about.person_3.name);
+    root.child('person_3').child('role').set(about.person_3.role);
+    root.child('person_3').child('content').set(about.person_3.content);
+    
+    root.child('person_4').child('name').set(about.person_4.name);
+    root.child('person_4').child('role').set(about.person_4.role);
+    root.child('person_4').child('content').set(about.person_4.content);
+    
+    root.child('person_5').child('name').set(about.person_5.name);
+    root.child('person_5').child('role').set(about.person_5.role);
+    root.child('person_5').child('content').set(about.person_5.content);
+    
+    Swal.fire(
+      'Good job!',
+      'You updated the about page!',
+      'success'
+    );
+  });
+}
+
+var getAbout = function(){
+  var root = firebase.database().ref().child("CMS/About");
+  var about = {};
+  root.on("value", snap =>{
+    about = snap.val();
+    $("#about-mission").val(about.mission);
+    $("#about-vision").val(about.vision);
+
+    
+    $("#about-name-1").val(about.person_1.name);
+    $("#about-role-1").val(about.person_1.role);
+    $("#about-content-1").val(about.person_1.content);
+    $("#about-name-2").val(about.person_2.name);
+    $("#about-role-2").val(about.person_2.role);
+    $("#about-content-2").val(about.person_2.content);
+    $("#about-name-3").val(about.person_3.name);
+    $("#about-role-3").val(about.person_3.role);
+    $("#about-content-3").val(about.person_3.content);
+    $("#about-name-4").val(about.person_4.name);
+    $("#about-role-4").val(about.person_4.role);
+    $("#about-content-4").val(about.person_4.content);
+    $("#about-name-5").val(about.person_5.name);
+    $("#about-role-5").val(about.person_5.role);
+    $("#about-content-5").val(about.person_5.content);
+
+    // $("#about-mission").val(contact.address);
+    console.log(about);
+    // console.log(contact.address);
+  });
+  
+}
+
 var checkReport = function(){
   // var storageUserRole = localStorage.getItem("site_role");
 

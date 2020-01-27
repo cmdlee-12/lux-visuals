@@ -10,6 +10,14 @@ $(document).ready(function(){
     showUserSelect();
     checkReport();
     viewUsers();
+    viewBlogs();
+    createBlog();
+    updateContact();
+    getContact();
+    createCauses();
+    viewCause();
+    updateAbout();
+    getAbout();
     // addProject();
     // showProject();
     // showUser();
