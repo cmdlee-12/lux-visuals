@@ -27,6 +27,7 @@ $secondary: #6b76ff;
     transition:         all $transition ease;
 }
 
+
 html {
 	// overflow-x: hidden;
 }
@@ -733,6 +734,10 @@ textarea.form-control {
 			font-size: 24px !important;
 		}
 	}
+	.blog-title{
+		font-size: 15px;
+		max-width: 200px;
+	}
 	.img{
 		width: 200px;
 		height: 200px;
@@ -754,7 +759,6 @@ textarea.form-control {
 		}
 	}
 	h2{
-		font-size: 20px;
 		font-weight: 900;
 	}
 	&:hover, &:focus{

@@ -30,3 +30,45 @@ function indexGetAbout(){
         console.log($("#about-content-5").html());
     });
 }
+
+getBlog = function (){
+  
+    // var root = firebase.database().ref().child("CMS/Cause");
+    // var cause = {};
+    // console.log(cause)
+    // root.on("value", snap =>{
+    //   cause = snap.val();
+    //   console.log(cause.cause_id)
+    // //   $(".blog-title").html(cause[cause_id].heading);
+    // });
+    // console.log("hi blog")
+    var rootRef = firebase.database().ref().child("CMS/Cause");
+    rootRef.on("child_added", snap => {
+        var cause_id = snap.child("cause_id").val();
+        console.log(cause_id)
+
+            var ref = firebase.database().ref().child("CMS/Cause").orderByChild("cause_id").equalTo(cause_id);
+            var cause = {};
+            ref.on("value", snapShot => {
+                cause = snapShot.val();
+                // $(".owl-stage").append(
+                //    " <div class=\"owl-item cloned\">" +
+                //     " <div class=\"item\">" +
+                //             "<a href=\"causes.html\" class=\"causes text-center\">" +
+                //                 "<div class=\"img\" style=\"background-image: url(images/pic-2.jpg);\"></div>" +
+                //                 "<h2 class=\"blog-title\">"+cause[cause_id].heading+"</h2>" +
+                //             "</a>" +
+                //         "</div>" +
+                //     "</div>"
+                // ); carousel code
+                $(".causes-wrapper").append(
+                    " <div class=\"col-lg-3\">" +
+                            "<a href=\"causes.html\" class=\"causes text-center\">" +
+                                "<div class=\"img\" style=\"background-image: url(images/pic-2.jpg);\"></div>" +
+                                "<h2 class=\"blog-title\">"+cause[cause_id].heading+"</h2>" +
+                            "</a>" +
+                    "</div>"
+                );
+        })
+    })
+  }
