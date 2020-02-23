@@ -579,8 +579,6 @@ var viewReports = function(){
     });
   }
 }
-
-
 // view reports per user
 var viewAppointment = function(){
   var storageUserID = localStorage.getItem("site_userID");
@@ -922,6 +920,7 @@ var getAbout = function(){
   });
   
 }
+
 
 var checkReport = function(){
   // var storageUserRole = localStorage.getItem("site_role");
