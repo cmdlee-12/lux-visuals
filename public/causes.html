@@ -68,75 +68,7 @@
 
   <section class="ftco-section">
     <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="causes causes-2 text-center pb-4 px-md-4">
-            <div class="img" style="background-image: url(images/pic-2.jpg);"></div>
-            <h2>Senate Approve Bill Punishing Catcalling</h2>
-            <p>Senate Bill 1326 seeks to penalize catcalling, wolf-whistling, cursing, leering, groping, and persistent
-              requests for name and contact details after clear refusal, public masturbation, and stalking among others.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="causes causes-2 text-center pb-4 px-md-4">
-            <div class="img" style="background-image: url(images/pic-1.jpg);"></div>
-            <h2>Catcalling: The Hidden Threat and Prejudice</h2>
-            <p>Why are we against catcalling? Because we want to feel safe, comfortable, and secure everyday. No matter
-              where we are and what we are wearing.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="causes causes-2 text-center pb-4 px-md-4">
-            <div class="img" style="background-image: url(images/pic-3.jpg);"></div>
-            <h2>#MeToo and Sexual Harassment in the Philippines</h2>
-            <p>It is said that in the novel Noli Me Tangere, Maria Clara was the victim of sexual harassment, but she
-              chose to suffer in silence. I hope that the modern Filipina will stop suffering in silence and create a
-              Filipina version of the #MeToo Movement.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="causes causes-2 text-center pb-4 px-md-4">
-            <div class="img" style="background-image: url(images/pic-4.jpg);"></div>
-            <h2>Street Harassment as a Determinant of Self-Esteem and Self Objectification</h2>
-            <p>As a result, objectification affected the women's cognitive or mental state. On the other hand, this kind
-              of public or street harassment was associated with body image, avoidance; behavior and more importantly
-              self-esteem which have emotional effects on woman who experienced catcalling.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="causes causes-2 text-center pb-4 px-md-4">
-            <div class="img" style="background-image: url(images/pic-6.jpg);"></div>
-            <h2>The Streets that haunt Filipino Women</h2>
-            <p>The streets bear witness to many of the country’s daily horrors: heavy traffic, street families begging
-              for food, vehicular accidents, theft among other crimes, and violence. An example of such violence is
-              sexual harassment, as experienced by Filipino women.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="causes causes-2 text-center pb-4 px-md-4">
-            <div class="img" style="background-image: url(images/pic-5.jpg);"></div>
-            <h2>The Numbers are Alarming: Sexual Harassment VS Women in The Philippines</h2>
-            <p>The first survey on sexual harassment and violence against women in the Philippines revealed the alarming
-              number of women who have experienced sexual harassment of any kind in the country—and the equally alarming
-              response to victims of harassment and abuse.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-5">
-        <div class="col text-center">
-          <div class="block-27">
-            <ul>
-              <li><a href="#">&lt;</a></li>
-              <li class="active"><span>1</span></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">&gt;</a></li>
-            </ul>
-          </div>
-        </div>
+      <div class="row causes-wrapper-page">
       </div>
     </div>
   </section>
@@ -151,7 +83,7 @@
             <p>Hindi ko pa alam ilalagay ko.</p>
             <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
               <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+              <li class="ftco-animate"><a href="https://www.facebook.com/pages/category/Medical-Company/Pasig-City-General-Hospital-Gender-and-Development-Group-1753151034905819/"><span class="icon-facebook"></span></a></li>
               <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
             </ul>
           </div>
@@ -183,11 +115,10 @@
             <h2 class="ftco-heading-2">Have a Question?</h2>
             <div class="block-23 mb-3">
               <ul>
-                <li><span class="icon icon-map-marker"></span><span class="text">839 P. Paredes, Sampaloc, Manila, Metro
-                    Manila, PH</span></li>
-                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+63 923 086 7067</span></a></li>
+                <li><span class="icon icon-map-marker"></span><span class="text"><p class="address"></p></span></li>
+                <li><a href="#"><span class="icon icon-phone"></span><span class="text"><p class="contact-num"></p></span></a></li>
                 <li><a href="#"><span class="icon icon-envelope"></span><span
-                      class="text">luxvisuals2018@gmail.com</span></a></li>
+                      class="text"><p class="email"></p></span></a></li>
               </ul>
             </div>
           </div>
@@ -225,6 +156,30 @@
   </script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
+  <script>
+    // Set the configuration for your app
+    // TODO: Replace with your project's config object
+    var config = {
+      apiKey: "AIzaSyAq5CebiiEZANlNLlrp685A4uxpUaMCDnI",
+      authDomain: "lux-visuals.firebaseapp.com",
+      databaseURL: "https://lux-visuals.firebaseio.com",
+      projectId: "lux-visuals",
+      storageBucket: "lux-visuals.appspot.com",
+      messagingSenderId: "621910592611",
+      appId: "1:621910592611:web:89eee636ee700265d0bc56",
+      measurementId: "G-2PGGTQF0RM"
+    };
+    firebase.initializeApp(config);
+
+    // Get a reference to the database service
+    var database = firebase.database();
+  </script>
+  <script src="js/custom.js"></script>
+  <script src="js/functions.js"></script>
 </body>
 
 </html>

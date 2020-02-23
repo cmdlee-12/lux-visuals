@@ -20,7 +20,15 @@ var authLogin = function () {
             var username = childSnapshot.val().userFirstName + " " + childSnapshot.val().userLastName;
             var userID = childSnapshot.val().userID;
             var userRole = childSnapshot.val().userRole;
-            if (user_email !== useremail || user_password !== password) {
+            var userStatus = childSnapshot.val().is_active;
+            if(userStatus != 'yes'){
+              Swal.fire({
+                type: 'error',
+                title: "Account Activation",
+                text: "Account is not active, contact the administrator to enable or active the account"
+              })
+            }
+            else if (user_email !== useremail || user_password !== password) {
               Swal.fire({
                 type: 'error',
                 title: "Email or Password",
@@ -32,7 +40,7 @@ var authLogin = function () {
               localStorage.setItem("site_userID", userID);
               localStorage.setItem("site_userPW", password);
               localStorage.setItem("site_role", userRole);
-              
+              localStorage.setItem("site_userStatus", userStatus);
               window.location = "dashboard/user/index.html";
             }
           });
@@ -54,6 +62,7 @@ var logoutUser = function(){
     localStorage.removeItem("site_userID");
     localStorage.removeItem("site_userPW");
     localStorage.removeItem("site_role");
+    localStorage.removeItem("site_userStatus");
 
     window.location = "../../index.html";
   })
@@ -89,6 +98,7 @@ var addUser = function () {
             root.child(key).child("userLastName").set(user_lname);
             root.child(key).child("userEmail").set(user_email);
             root.child(key).child("userPassword").set(user_pw);
+            root.child(key).child("is_active").set('yes');
             root.child(key).child("userRole").set("User");
             Swal.fire(
               'Good job!',
@@ -622,9 +632,17 @@ var showUserSelect = function(){
 var viewUsers = function(){
   var table = $('#userTable').DataTable();
   var rootRef = firebase.database().ref().child("Users");
+  table.clear().draw();
   rootRef.on("child_added", snap => {
-    var dataSet = [snap.child("userID").val(),snap.child("userFirstName").val()+ " "+ snap.child("userLastName").val(),
-    snap.child("userEmail").val()];
+    
+    var btnText = (snap.child("is_active").val() == 'yes' ? 'Deactivate' : 'Activate');
+    var btnClass = (snap.child("is_active").val() == 'yes' ? 'warning' : 'success');
+    var dataSet = [
+      snap.child("userID").val(),
+      snap.child("userFirstName").val()+ " "+ snap.child("userLastName").val(),
+      snap.child("userEmail").val(),
+      snap.child('is_active').val(),
+      '<button class="btn btn-sm btn-' + btnClass + ' btn-cause-active">' + btnText + '</button>'];
       table.rows.add([dataSet]).draw();
   });
 }
@@ -639,13 +657,14 @@ var createBlog = function(){
     var link = $("#blog-link").val();
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
     var dateTime = date+' '+time;
     root.child(key).child("blogID").set(key);
     root.child(key).child("heading").set(heading);
     root.child(key).child("content").set(content);
     root.child(key).child("link").set(link);
     root.child(key).child("date_posted").set(dateTime);
+    root.child(key).child("is_active").set('yes');
     Swal.fire(
       'Good job!',
       'You added a new blog!',
@@ -657,9 +676,20 @@ var createBlog = function(){
 var viewBlogs = function(){
   var table = $('#blogsTable').DataTable();
   var rootRef = firebase.database().ref().child("Blogs");
+  table.clear().draw();
   rootRef.on("child_added", snap => {
-    var dataSet = [snap.child("blogID").val(),snap.child("heading").val(),
-    snap.child("content").val(), snap.child("link").val(), snap.child("date_posted").val()];
+    
+    var btnText = (snap.child("is_active").val() == 'yes' ? 'Enable' : 'Disable');
+    var btnClass = (snap.child("is_active").val() == 'yes' ? 'warning' : 'success');
+
+    var dataSet = [
+      snap.child("blogID").val(),
+      snap.child("heading").val(),
+      snap.child("content").val(), 
+      snap.child("link").val(), 
+      snap.child('is_active').val(),
+      snap.child("date_posted").val(),
+      '<button class="btn btn-sm btn-' + btnClass + ' btn-cause-active">' + btnText + '</button>'];
       table.rows.add([dataSet]).draw();
   });
 }
@@ -713,7 +743,7 @@ var createCauses = function(){
     var isactive = $("#cause-is_active").val();
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
     var dateTime = date+' '+time;
     root.child(key).child("cause_id").set(key);
     root.child(key).child("heading").set(heading);
@@ -732,13 +762,70 @@ var createCauses = function(){
 var viewCause = function(){
   var table = $('#causeTable').DataTable();
   var rootRef = firebase.database().ref().child("CMS/Cause");
+  // table.ajax.reload();
+  table.clear().draw();
   rootRef.on("child_added", snap => {
-    var dataSet = [snap.child("cause_id").val(),snap.child("heading").val(),
-    snap.child("content").val(), snap.child("link").val(), snap.child("is_active").val(),snap.child("created_at").val()];
+    var btnText = (snap.child("is_active").val() == 'yes' ? 'Deactivate' : 'Activate');
+    var btnClass = (snap.child("is_active").val() == 'yes' ? 'warning' : 'success');
+    var dataSet = [
+      snap.child("cause_id").val(),
+      snap.child("heading").val(),
+      snap.child("content").val(), 
+      snap.child("link").val(), 
+      snap.child("is_active").val(),
+      snap.child("created_at").val(),
+      '<button class="btn btn-sm btn-' + btnClass + ' btn-cause-active">' + btnText + '</button>'];
       table.rows.add([dataSet]).draw();
   });
+  
 }
 
+$(document).ready(function(){
+  var table = $('#causeTable').DataTable();
+  var blogsTable = $("#blogsTable").DataTable();
+  var userTable = $("#userTable").DataTable();
+  $('#causeTable tbody').on( 'click', 'button', function () {
+    var data = table.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("CMS/Cause");
+    var is_active = data[4] == 'yes' ? 'no' : 'yes';
+    rootRef.child(data[0]).update({'is_active' : is_active});
+    Swal.fire(
+      'Good job!',
+      'You updated the cause!',
+      'success'
+    );
+    viewCause();
+  });
+  
+  $('#blogsTable tbody').on( 'click', 'button', function () {
+    var data = blogsTable.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("Blogs");
+    var is_active = data[4] == 'yes' ? 'no' : 'yes';
+    rootRef.child(data[0]).update({'is_active' : is_active});
+    Swal.fire(
+      'Good job!',
+      'You updated the blog!',
+      'success'
+    );
+    viewBlogs();
+  });
+  
+  $('#userTable tbody').on( 'click', 'button', function () {
+    var data = userTable.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("Users");
+    var is_active = data[3] == 'yes' ? 'no' : 'yes';
+    rootRef.child(data[0]).update({'is_active' : is_active});
+    Swal.fire(
+      'Good job!',
+      'You updated the user!',
+      'success'
+    );
+    viewUsers();
+  });
+});
 
 var updateAbout = function(){
   

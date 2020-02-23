@@ -74,7 +74,7 @@
               <span class="icon-map-signs"></span>
             </div>
             <h3 class="mb-4">Address</h3>
-            <p>839 P. Paredes, Sampaloc, Manila, Metro Manila, PH</p>
+            <p class="address"></p>
           </div>
         </div>
         <div class="col-md-3 d-flex">
@@ -83,7 +83,7 @@
               <span class="icon-phone2"></span>
             </div>
             <h3 class="mb-4">Contact Number</h3>
-            <p><a href="tel://1234567920">+63 923 086 7067</a></p>
+            <p class="contact-num"></p>
           </div>
         </div>
         <div class="col-md-3 d-flex">
@@ -92,7 +92,7 @@
               <span class="icon-paper-plane"></span>
             </div>
             <h3 class="mb-4">Email Address</h3>
-            <p><a href="mailto:luxvisuals2018@gmail.com">luxvisuals2018@gmail.com</a></p>
+            <p class="email"></p>
           </div>
         </div>
         <div class="col-md-3 d-flex">
@@ -101,7 +101,7 @@
               <span class="icon-globe"></span>
             </div>
             <h3 class="mb-4">Website</h3>
-            <p><a href="#">SeeingTheSigns.com</a></p>
+            <p class="website"></p>
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@
             <p>Wala pa ako maisip.</p>
             <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
               <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-              <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+              <li class="ftco-animate"><a href="https://www.facebook.com/pages/category/Medical-Company/Pasig-City-General-Hospital-Gender-and-Development-Group-1753151034905819/"><span class="icon-facebook"></span></a></li>
               <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
             </ul>
           </div>
@@ -181,11 +181,10 @@
             <h2 class="ftco-heading-2">Have a Question?</h2>
             <div class="block-23 mb-3">
               <ul>
-                <li><span class="icon icon-map-marker"></span><span class="text">839 P. Paredes, Sampaloc, Manila, Metro
-                    Manila, PH</span></li>
-                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+63 923 086 7067</span></a></li>
+                <li><span class="icon icon-map-marker"></span><span class="text"><p class="address"></p></span></li>
+                <li><a href="#"><span class="icon icon-phone"></span><span class="text"><p class="contact-num"></p></span></a></li>
                 <li><a href="#"><span class="icon icon-envelope"></span><span
-                      class="text">luxvisuals2018@gmail.com</span></a></li>
+                      class="text"><p class="email"></p></span></a></li>
               </ul>
             </div>
           </div>
@@ -223,6 +222,31 @@
   </script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
+  <script>
+    // Set the configuration for your app
+    // TODO: Replace with your project's config object
+    var config = {
+      apiKey: "AIzaSyAq5CebiiEZANlNLlrp685A4uxpUaMCDnI",
+      authDomain: "lux-visuals.firebaseapp.com",
+      databaseURL: "https://lux-visuals.firebaseio.com",
+      projectId: "lux-visuals",
+      storageBucket: "lux-visuals.appspot.com",
+      messagingSenderId: "621910592611",
+      appId: "1:621910592611:web:89eee636ee700265d0bc56",
+      measurementId: "G-2PGGTQF0RM"
+    };
+    firebase.initializeApp(config);
+
+    // Get a reference to the database service
+    var database = firebase.database();
+  </script>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="js/functions.js"></script>
 </body>
 
 </html>
