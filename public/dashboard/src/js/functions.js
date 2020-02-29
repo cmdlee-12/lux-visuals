@@ -633,8 +633,8 @@ var viewUsers = function(){
   table.clear().draw();
   rootRef.on("child_added", snap => {
     
-    var btnText = (snap.child("is_active").val() == 'yes' ? 'Deactivate' : 'Activate');
-    var btnClass = (snap.child("is_active").val() == 'yes' ? 'warning' : 'success');
+    var btnText = (snap.child("is_active").val() == 'no' ? 'Deactivate' : 'Activate');
+    var btnClass = (snap.child("is_active").val() == 'no' ? 'success' : 'warning');
     var dataSet = [
       snap.child("userID").val(),
       snap.child("userFirstName").val()+ " "+ snap.child("userLastName").val(),
@@ -677,8 +677,8 @@ var viewBlogs = function(){
   table.clear().draw();
   rootRef.on("child_added", snap => {
     
-    var btnText = (snap.child("is_active").val() == 'yes' ? 'Enable' : 'Disable');
-    var btnClass = (snap.child("is_active").val() == 'yes' ? 'warning' : 'success');
+    var btnText = (snap.child("is_active").val() == 'no' ? 'Enable' : 'Disable');
+    var btnClass = (snap.child("is_active").val() == 'no' ? 'success' : 'warning');
 
     var dataSet = [
       snap.child("blogID").val(),
@@ -763,8 +763,8 @@ var viewCause = function(){
   // table.ajax.reload();
   table.clear().draw();
   rootRef.on("child_added", snap => {
-    var btnText = (snap.child("is_active").val() == 'yes' ? 'Deactivate' : 'Activate');
-    var btnClass = (snap.child("is_active").val() == 'yes' ? 'warning' : 'success');
+    var btnText = (snap.child("is_active").val() == 'no' ? 'Deactivate' : 'Activate');
+    var btnClass = (snap.child("is_active").val() == 'no' ? 'success' : 'warning');
     var dataSet = [
       snap.child("cause_id").val(),
       snap.child("heading").val(),
@@ -782,6 +782,7 @@ $(document).ready(function(){
   var table = $('#causeTable').DataTable();
   var blogsTable = $("#blogsTable").DataTable();
   var userTable = $("#userTable").DataTable();
+  var messageTable = $("#messageTable").DataTable();
   $('#causeTable tbody').on( 'click', 'button', function () {
     var data = table.row( $(this).parents('tr') ).data();
     
@@ -823,6 +824,21 @@ $(document).ready(function(){
     );
     viewUsers();
   });
+  
+  $('#messageTable tbody').on( 'click', 'button', function () {
+    var data = messageTable.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("Messages");
+    var is_active = data[5] == 'yes' ? 'no' : 'yes'; 
+    rootRef.child(data[0]).update({'is_active' : is_active});
+    Swal.fire(
+      'Good job!',
+      'You updated the message!',
+      'success'
+    );
+    viewMessages();
+  });
+  
 });
 
 var updateAbout = function(){
@@ -919,6 +935,47 @@ var getAbout = function(){
     // console.log(contact.address);
   });
   
+}
+
+var viewMessages = function(){
+  var table = $('#messageTable').DataTable();
+  var rootRef = firebase.database().ref().child("Messages");
+  table.clear().draw();
+  rootRef.on("child_added", snap => {
+    
+    var btnText = (snap.child("is_active").val() == 'no' ? 'Activate' : 'Disable');
+    var btnClass = (snap.child("is_active").val() == 'no' ? 'success' : 'warning');
+
+    var dataSet = [
+      snap.child("id").val(),
+      snap.child("name").val(),
+      snap.child("email").val(), 
+      snap.child("subject").val(), 
+      snap.child("message").val(), 
+      snap.child('is_active').val(),
+      snap.child("date_posted").val(),
+      '<button class="btn btn-sm btn-' + btnClass + ' btn-cause-active">' + btnText + '</button>'];
+      table.rows.add([dataSet]).draw();
+  });
+}
+
+var viewRatings = function(){
+  var table = $('#ratingsTable').DataTable();
+  var rootRef = firebase.database().ref().child("Ratings");
+  table.clear().draw();
+  rootRef.on("child_added", snap => {
+    
+    var btnText = (snap.child("is_active").val() == 'no' ? 'Activate' : 'Disable');
+    var btnClass = (snap.child("is_active").val() == 'no' ? 'success' : 'warning');
+
+    var dataSet = [
+      snap.child("id").val(),
+      snap.child("rate").val(), 
+      snap.child('is_active').val(),
+      snap.child("created_at").val(),
+      '<button class="btn btn-sm btn-' + btnClass + ' btn-cause-active">' + btnText + '</button>'];
+      table.rows.add([dataSet]).draw();
+  });
 }
 
 

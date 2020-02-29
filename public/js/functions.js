@@ -256,3 +256,88 @@ function getMonthName(month){
 //       message => alert(message)
 //     );
 // }
+
+sendEmail = function(){
+    var templateParams = {
+        name: $("#name").val(),
+        email: $("#email").val(),
+        subject : $("#subject").val(),
+        message : $("#message").val(),
+    };
+
+    var service_id = 'gmail';
+    var template_id = 'template_YspRBVhF';
+
+    emailjs.send(service_id, template_id, templateParams)
+        .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+            Swal.fire(
+            'Good job!',
+            'Message sent successfully!',
+            'success'
+            );
+        }, function(error) {
+        console.log('FAILED...', error);
+        });
+}
+$(document).ready(function(){
+    $("#form-contact-send").submit(function(e){
+        e.preventDefault();
+        var root = firebase.database().ref().child("Messages");
+        var key = root.push().key;
+
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var subject = $("#subject").val();
+        var message = $("#message").val();
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
+        var dateTime = date+' '+time;
+        root.child(key).child("id").set(key);
+        root.child(key).child("name").set(name);
+        root.child(key).child("email").set(email);
+        root.child(key).child("subject").set(subject);
+        root.child(key).child("message").set(message);
+        root.child(key).child("date_posted").set(dateTime);
+        root.child(key).child("is_active").set('yes');
+        console.log('sending email');
+        sendEmail();
+        $("#name").val("");
+        $("#email").val("");
+        $("#subject").val("");
+        $("#message").val("");
+    });
+
+    $(".my-rating-4").starRating({
+        totalStars: 5,
+        starShape: 'rounded',
+        starSize: 40,
+        emptyColor: 'lightgray',
+        hoverColor: '#FEB72B',
+        activeColor: 'yellow',
+        useGradient: false,
+        callback: function(currentRating, $el){
+          console.log(currentRating);
+          
+            var root = firebase.database().ref().child("Ratings");
+            var key = root.push().key;
+
+            var rate = currentRating; 
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
+            var dateTime = date+' '+time;
+            root.child(key).child("id").set(key);
+            root.child(key).child("rate").set(rate); 
+            root.child(key).child("created_at").set(dateTime);
+            root.child(key).child("is_active").set('yes');
+            
+            Swal.fire(
+                'Good job!',
+                'You successfully rate the video!',
+                'success'
+            );
+        }
+    });
+});

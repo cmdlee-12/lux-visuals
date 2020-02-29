@@ -18,7 +18,8 @@ $(document).ready(function(){
     viewCause();
     updateAbout();
     getAbout();
-    getBlog();
+    viewMessages();
+    viewRatings();
     // addProject();
     // showProject();
     // showUser();
