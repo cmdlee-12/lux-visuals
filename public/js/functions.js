@@ -244,7 +244,7 @@ getBlogs = function(){
                     '    </div>' +
                     '    <h3 class="heading"><a href="#">"' + cause.heading + '"</a></h3>' +
                     '    <p>' + cause.content + '</p>' +
-                    '    <p><a href="' + cause.link + '"' +
+                    '    <p><a href="blog-view.html?key=' + cause.blogID + '"' +
                     '       class="btn btn-primary py-2 px-3">Read more</a></p>' +
                     '</div>' +
                 '</div>' +
@@ -253,7 +253,44 @@ getBlogs = function(){
     })
 }
 
+getShowBlog = function(){ 
+    var params = getUrlParam();
+    var key = params.key;
+    
+    var root = firebase.database().ref().child("Blogs/" + key);
+    
+    var showBlog = {};
+    root.on("value", snap => {
+        showBlog = snap.val();
+        $("#blog-breadcrumb-heading").text(showBlog.heading); 
+        $("#blog-heading").text(showBlog.heading); 
+        $("#blog-date").text(showBlog.date_posted); 
+        $("#blog-content").text(showBlog.content); 
+        console.log(showBlog);
+    });
+    console.log(root);
+    console.log(key);
+}
 
+getUrlParam = function(){
+    // initialize an empty object
+    let result = {};
+    // get URL query string
+    let params = window.location.search;
+    // remove the '?' character
+    params = params.substr(1);
+    // split the query parameters
+    let queryParamArray = params.split('&amp;');
+    // iterate over parameter array
+    queryParamArray.forEach(function(queryParam) {
+        // split the query parameter over '='
+        let item = queryParam.split('=');
+        result[item[0]] = decodeURIComponent(item[1]);
+    });
+    // print result object
+    console.log(result);
+    return result;
+}
 function getMonthName(month){
     switch(month){
         case 1 : return 'January';

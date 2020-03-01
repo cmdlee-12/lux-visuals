@@ -6,6 +6,7 @@ $(document).ready(function(){
     getCauses();
     getBlogs();
     getHome();
+    getShowBlog();
 })
 
 
