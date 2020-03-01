@@ -216,7 +216,7 @@ getCausesPage = function (){
             "<div class=\"col-lg-4\">" +
                 "<div class=\"causes causes-2 text-center pb-4 px-md-4\">" +
                     "<div class=\"img\" style=\"background-image: url(images/pic-2.jpg);\"></div>" +
-                    "<h2 class=\"causes-heading\"><a href='"+cause.link+"'>"+cause.heading+"</a></h2>"+
+                    "<h2 class=\"causes-heading\"><a target='_blank' href='"+cause.link+"'>"+cause.heading+"</a></h2>"+
                     "<p class=\"causes-content\">"+cause.content+"</p>"+
                 "</div>" +
             "</div>"
