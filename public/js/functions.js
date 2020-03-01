@@ -239,8 +239,6 @@ getBlogs = function(){
                     '<div class="text d-block pl-md-4">' +
                     '    <div class="meta mb-3">' +
                     '        <div><a href="#"> ' + cause.date_posted + '</a></div>' +
-                    '        <div><a href="#">Contributor</a></div>' +
-                    '        <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>' +
                     '    </div>' +
                     '    <h3 class="heading"><a href="#">"' + cause.heading + '"</a></h3>' +
                     '    <p>' + cause.content + '</p>' +
