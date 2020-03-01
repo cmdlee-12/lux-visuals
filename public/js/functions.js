@@ -1,5 +1,35 @@
 var about = {}
 
+getHome = function (){
+    var root = firebase.database().ref().child("CMS/Home");
+    var home = {};
+    root.on("value", snap =>{
+        home = snap.val();
+
+        $("#home-first__heading-title").html(home.firstSection.firstSection_Heading);
+        $(".home-first__btn-name").html("<a href=\""+home.firstSection.firstSection_button_link+"\" class=\"btn btn-black py-3 px-4\">"+home.firstSection.firstSection_button+"</a>");
+        $(".home-first__video-link").html("<a href="+home.firstSection.firstSection_video+" target=\"_blank\" class=\"popup-vimeo\"><span class=\"icon\"><i class=\"ion-ios-play\"></i></span> <span class=\"play\">Play video</span></a>");
+        
+
+        $("#home-second__first-heading").html(home.secondSection.secondSection_First_Heading);
+        $("#home-second__first-content").html(home.secondSection.secondSection_First_Content);
+        $("#home-second__second-heading").html(home.secondSection.secondSection_Second_Heading);
+        $("#home-second__second-content").html(home.secondSection.secondSection_Second_Content);
+    
+        $("#home-second__first-btn").html("<a href="+home.secondSection.secondSection_First_Btn_link+" class=\"btn btn-primary py-3 px-4\">"+home.secondSection.secondSection_First_Btn+"</a>");
+        $("#home-second__second-btn").html("<a href="+home.secondSection.secondSection_Second_Btn_link+" class=\"btn btn-black py-3 px-4\">"+home.secondSection.secondSection_Second_Btn+"</a>");
+    
+        $("#first-heading").html(home.thirdSection.thirdSection_First_Heading);
+        $("#first-content").html(home.thirdSection.thirdSection_First_Content);
+        $("#second-heading").html(home.thirdSection.thirdSection_Second_Heading);
+        $("#second-content").html(home.thirdSection.thirdSection_Second_Content);
+        $("#third-heading").html(home.thirdSection.thirdSection_Third_Heading);
+        $("#third-content").html(home.thirdSection.thirdSection_Third_Content);
+        $("#fourth-heading").html(home.thirdSection.thirdSection_Fourth_Heading);
+        $("#fourth-content").html(home.thirdSection.thirdSection_Fourth_Content);
+    });
+}
+
 function indexGetAbout(){
     
     var root = firebase.database().ref().child("CMS/About");
@@ -121,11 +151,12 @@ getCauses = function (){
         var cause = {};
         cause = snap.val();
         $(".causes-wrapper").append(
-            "<div class=\"col-lg-3\">" +
-                "<a href=\"causes.html\" class=\"causes text-center\">" +
+            "<div class=\"col-lg-4\">" +
+                "<div class=\"causes causes-2 text-center pb-4 px-md-4\">" +
                     "<div class=\"img\" style=\"background-image: url(images/pic-2.jpg);\"></div>" +
-                    "<h2 class=\"blog-title\">"+cause.heading+"</h2>" +
-                "</a>" +
+                    "<h2 class=\"causes-heading\"><a href='"+cause.link+"'>"+cause.heading+"</a></h2>"+
+                    "<p class=\"causes-content\">"+cause.content+"</p>"+
+                "</div>" +
             "</div>"
         );
     })
@@ -140,7 +171,7 @@ getContact = function (){
         $(".address").html(contact.address);
         $(".contact-num").html("<a href=tel:"+contact.contact_number+">"+contact.contact_number+"</a>");
         $(".email").html("<a href=mailto:"+contact.email+">"+contact.email+"</a>");
-        $(".website").html("<a href="+contact.website+">"+contact.website+"</a>");
+        $(".website").html("<a target='_blank' href="+contact.website+">"+contact.website+"</a>");
     });
 }
 
@@ -185,7 +216,7 @@ getCausesPage = function (){
             "<div class=\"col-lg-4\">" +
                 "<div class=\"causes causes-2 text-center pb-4 px-md-4\">" +
                     "<div class=\"img\" style=\"background-image: url(images/pic-2.jpg);\"></div>" +
-                    "<h2 class=\"causes-heading\">"+cause.heading+"</h2>"+
+                    "<h2 class=\"causes-heading\"><a href='"+cause.link+"'>"+cause.heading+"</a></h2>"+
                     "<p class=\"causes-content\">"+cause.content+"</p>"+
                 "</div>" +
             "</div>"
@@ -195,7 +226,6 @@ getCausesPage = function (){
 
 getBlogs = function(){
     var rootRef = firebase.database().ref().child("Blogs");
-    console.log('test');
     rootRef.on("child_added", snap => {
         
         var cause_id = snap.child("cause_id").val();
@@ -223,6 +253,7 @@ getBlogs = function(){
     })
 }
 
+
 function getMonthName(month){
     switch(month){
         case 1 : return 'January';
@@ -240,22 +271,6 @@ function getMonthName(month){
         default : return '';
     }
 }
-// sendEmail = function (){
-//     Email.send({
-//         SecureToken : "e2b8d5d2-cd2c-4b19-b292-db72965ff884",
-//         To : 'lee.christinedazo@gmail.com',
-//         From : "you@isp.com",
-//         Subject : "This is the subject",
-//         Body : "And this is the body",
-//         Attachments : [
-//         {
-//             name : "smtpjs.png",
-//             path : "https://networkprogramming.files.wordpress.com/2017/11/smtpjs.png"
-//         }]
-//     }).then(
-//       message => alert(message)
-//     );
-// }
 
 sendEmail = function(){
     var templateParams = {

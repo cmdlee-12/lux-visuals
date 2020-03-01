@@ -167,17 +167,27 @@
           <span>Users</span></a>
       </li>
       <li class="nav-item" id="blogs">
-        <a class="nav-link" href="blogs.html">
+        <a class="nav-link" href="../blogs.html">
             <i class="fas fa-users"></i>
             <span>Blogs</span></a>
     </li>
-    <li class="nav-item nav-dropdown cms" id="users">
-        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-group"></i> CMS</a>
+    <li class="nav-item" id="messages">
+      <a class="nav-link" href="../messages.html">
+          <i class="fas fa-envelope"></i>
+          <span>Messages</span></a>
+  </li>
+  <li class="nav-item" id="ratings">
+      <a class="nav-link" href="../ratings.html">
+          <i class="fas fa-envelope"></i>
+          <span>Ratings</span></a>
+  </li>
+    <li class="nav-item nav-dropdown cms " id="users">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-group active"></i> CMS</a>
         <ul class="nav-dropdown-items">
-          <li class="nav-item"><a class="nav-link" href="home.html"><i class="nav-icon fa fa-user"></i> <span>Home</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html"><i class="nav-icon fa fa-group"></i> <span>About</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="causes.html"><i class="nav-icon fa fa-user"></i> <span>Causes</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html"><i class="nav-icon fa fa-group"></i> <span>Contact</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="home.html"><i class="nav-icon fa fa-user"></i> <span>Home</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html"><i class="nav-icon fa fa-group"></i> <span>About</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="causes.html"><i class="nav-icon fa fa-user"></i> <span>Causes</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html"><i class="nav-icon fa fa-group"></i> <span>Contact</span></a></li>
         </ul> 
     </li>
     </ul>
@@ -197,8 +207,184 @@
         <div class="row project-wrapper">
         </div>
         <hr>
-
-
+        <form id="frm-home">
+          <div class="first-section-wrapper">
+            <h4>First Section</h4>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label for="home-first__video-link">Video Link</label>
+                  <input type="text" name="home-first__video-link" id="home-first__video-link" class="form-control">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <label for="home-first__heading-title">Heading title</label>
+                <input type="text" name="home-first__heading-title" id="home-first__heading-title" class="form-control">
+              </div>
+              <div class="col-lg-3">
+                <label for="home-first__btn-name">Button Name</label>
+                <input type="text" name="home-first__btn-name" id="home-first__btn-name" class="form-control">
+              </div>
+              <div class="col-lg-3">
+                <label for="home-first__btn-link">Button Link</label>
+                <input type="text" name="home-first__btn-link" id="home-first__btn-link" class="form-control">
+              </div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <div class="second-section-wrapper">
+            <h4>Second Section</h4>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="home-second__first-heading">First Heading</label>
+                      <input type="text" name="home-second__first-heading" id="home-second__first-heading" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="home-second__first-content">Content</label>
+                      <textarea name="home-second__first-content" id="home-second__first-content" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="home-second__first-btn">Button label</label>
+                      <input type="text" name="home-second__first-btn" id="home-second__first-btn" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="home-second__first-btn-link">Button link</label>
+                      <input type="text" name="home-second__first-btn-link" id="home-second__first-btn-link" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="home-second__second-heading">Second Heading</label>
+                      <input type="text" name="home-second__second-heading" id="home-second__second-heading" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="home-second__second-content">Content</label>
+                      <textarea name="home-second__second-content" id="home-second__second-content" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="home-second__second-btn">Button label</label>
+                      <input type="text" name="home-second__second-btn" id="home-second__second-btn" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="home-second__second-btn-link">Button link</label>
+                      <input type="text" name="home-second__second-btn-link" id="home-second__second-btn-link" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <div class="second-section-wrapper">
+            <h4>Third Section</h4>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="first-heading">First Heading</label>
+                      <input type="text" name="first-heading" id="first-heading" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="first-content">Content</label>
+                      <textarea name="first-content" id="first-content" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="second-heading">Second Heading</label>
+                      <input type="text" name="second-heading" id="second-heading" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="second-content">Content</label>
+                      <textarea name="second-content" id="second-content" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="third-heading">Third Heading</label>
+                      <input type="text" name="third-heading" id="third-heading" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="third-content">Content</label>
+                      <textarea name="third-content" id="third-content" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="fourth-heading">Fourth Heading</label>
+                      <input type="text" name="fourth-heading" id="fourth-heading" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="fourth-content">Content</label>
+                      <textarea name="fourth-content" id="fourth-content" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-5 mt-4">
+            <div class="col-lg-12">
+                <button class="btn btn-primary w-100" type="submit">Submit</button>
+            </div>
+          </div>
+        </form>
       </div>
       <!-- /.container-fluid -->
       <!-- Sticky Footer -->
@@ -231,7 +417,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary logoutUser" href="#">Logout</a>
+          <a class="btn btn-primary logoutUserCMS" href="#">Logout</a>
         </div>
       </div>
     </div>

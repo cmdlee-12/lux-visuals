@@ -5,9 +5,7 @@ $(document).ready(function(){
     getHome();
     getCauses();
     getBlogs();
-
-
-    // sendEmail();
+    getHome();
 })
 
 

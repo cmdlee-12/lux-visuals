@@ -83,3 +83,6 @@ button.btn.card-task {
     color: #ffb400;
 }
 
+.user-wrapper i.fas.fa-user-circle {
+    font-size: 100px;
+}

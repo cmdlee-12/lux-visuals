@@ -159,7 +159,7 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="reports.html">
                     <i class="fas fa-eye"></i>
                     <span>View Reports</span></a>
@@ -189,7 +189,7 @@
                     <i class="fas fa-envelope"></i>
                     <span>Ratings</span></a>
             </li>
-            <li class="nav-item nav-dropdown cms" id="users" >
+            <li class="nav-item nav-dropdown cms" id="users">
                 <a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-group"></i> CMS</a>
                 <ul class="nav-dropdown-items">
                     <li class="nav-item"><a class="nav-link" href="cms/home.html"><i class="nav-icon fa fa-user"></i> <span>Home</span></a></li>
@@ -200,36 +200,59 @@
             </li>
         </ul>
         <div id="content-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid user-wrapper">
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Reports</a>
+                        <a href="#">User Profile</a>
                     </li>
                     <li class="breadcrumb-item active">Overview</li>
                 </ol>
-                <div class="row mt-4">
-                    <div class="col-lg-12">
-                        <table class="table" id="reportTable">
-                            <thead class="table-warning">
-                                <tr>
-                                    <th scope="col" class="col-reporter">Reporter</th>
-                                    <th scope="col">Type of Report</th>
-                                    <th scope="col">Street</th>
-                                    <th scope="col">Barangay</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Time</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-
+                <div class="row mt-4 justify-content-center">
+                    <div class="col-lg-12 text-center">
+                        <i class=" fas fa-user-circle"></i>
+                        <hr>
                     </div>
                 </div>
+                <form id="user-current-profile">
+                    <div class="row mt-2 justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="fName">First Name</label>
+                                <input type="text" name="fName" id="fName"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="lName">Last Name</label>
+                                <input type="text" name="lName" id="lName"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2 justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" name="emailAdd" id="emailAdd"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="currentPassword" id="currentPassword"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2 float-right">
+                        <div class="col-lg-12">
+                            <button class="btn btn-primary updateProfile">Update</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <!-- /.container-fluid -->
             <!-- Sticky Footer -->

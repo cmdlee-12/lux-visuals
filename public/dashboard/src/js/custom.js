@@ -8,7 +8,6 @@ $(document).ready(function(){
     viewReports();
     viewAppointment();
     showUserSelect();
-    checkReport();
     viewUsers();
     viewBlogs();
     createBlog();
@@ -20,14 +19,10 @@ $(document).ready(function(){
     getAbout();
     viewMessages();
     viewRatings();
-    // addProject();
-    // showProject();
-    // showUser();
-    // showTask();
-    // userProfile();
-    // updateUserProfile();
-    // showTaskPerUser();
-    // taskBoard();
+    getHome();
+    updateHome();
+    getProfile();
+    updateProfile();
 })
 
 

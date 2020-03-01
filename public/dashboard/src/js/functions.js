@@ -470,6 +470,44 @@ var addReport = function (){
     }
   })
 }
+// view user Profile
+getProfile = function(){
+  var storageUserID = localStorage.getItem("site_userID");
+  var rootRef = firebase.database().ref().child("Users").orderByChild("userID").equalTo(storageUserID);
+  rootRef.on("child_added", snap => {
+    $("#fName").val(snap.child("userFirstName").val());
+    $("#lName").val(snap.child("userLastName").val());
+    $("#emailAdd").val(snap.child("userEmail").val());
+    $("#currentPassword").val(snap.child("userPassword").val());
+  })
+}
+
+//update user profile
+updateProfile = function(){
+  $("#user-current-profile").submit(function(e){
+    e.preventDefault();
+    var storageUserID = localStorage.getItem("site_userID");
+
+    var root = firebase.database().ref().child("Users").child(storageUserID);
+    var userProfile = {
+      userFirstName : $("#fName").val(),
+      userLastName : $("#lName").val(),
+      userEmail : $("#emailAdd").val(),
+      userPassword : $("#currentPassword").val()
+    };
+
+    root.child('userFirstName').set(userProfile.userFirstName);
+    root.child('userLastName').set(userProfile.userLastName);
+    root.child('userEmail').set(userProfile.userEmail);
+    root.child('userPassword').set(userProfile.userPassword);
+    Swal.fire(
+      'Good job!',
+      'You have updated your profile!',
+      'success'
+    );
+  });
+}
+
 // view reports per user
 var viewReports = function(){
   var storageUserID = localStorage.getItem("site_userID");
@@ -729,6 +767,112 @@ var getContact = function(){
   
 }
 
+var updateHome = function(){
+  $("#frm-home").submit(function(e){
+    e.preventDefault();
+    var root = firebase.database().ref().child("CMS/Home");
+    var home = {
+      firstSection : {
+        firstSection_Heading : $("#home-first__heading-title").val(),
+        firstSection_button : $("#home-first__btn-name").val(),
+        firstSection_button_link: $("#home-first__btn-link").val(),
+        firstSection_video: $("#home-first__video-link").val()
+      },
+      secondSection: {
+        secondSection_First_Heading : $("#home-second__first-heading").val(),
+        secondSection_First_Content : $("#home-second__first-content").val(),
+        secondSection_Second_Heading : $("#home-second__second-heading").val(),
+        secondSection_Second_Content : $("#home-second__second-content").val(),
+
+        secondSection_First_Btn : $("#home-second__first-btn").val(),
+        secondSection_First_Btn_link : $("#home-second__first-btn-link").val(),
+        secondSection_Second_Btn : $("#home-second__second-btn").val(),
+        secondSection_Second_Btn_link : $("#home-second__second-btn-link").val(),
+      },
+      thirdSection: {
+        thirdSection_First_Heading : $("#first-heading").val(),
+        thirdSection_First_Content : $("#first-content").val(),
+
+        thirdSection_Second_Heading : $("#second-heading").val(),
+        thirdSection_Second_Content : $("#second-content").val(),
+
+        thirdSection_Third_Heading : $("#third-heading").val(),
+        thirdSection_Third_Content : $("#third-content").val(),
+
+        thirdSection_Fourth_Heading : $("#fourth-heading").val(),
+        thirdSection_Fourth_Content : $("#fourth-content").val(),
+
+      }
+    };
+    root.child('firstSection').child('firstSection_Heading').set(home.firstSection.firstSection_Heading);
+    root.child('firstSection').child('firstSection_button').set(home.firstSection.firstSection_button);
+    root.child('firstSection').child('firstSection_button_link').set(home.firstSection.firstSection_button_link);
+    root.child('firstSection').child('firstSection_video').set(home.firstSection.firstSection_video);
+
+    root.child('secondSection').child('secondSection_First_Heading').set(home.secondSection.secondSection_First_Heading);
+    root.child('secondSection').child('secondSection_First_Content').set(home.secondSection.secondSection_First_Content);
+    root.child('secondSection').child('secondSection_Second_Heading').set(home.secondSection.secondSection_Second_Heading);
+    root.child('secondSection').child('secondSection_Second_Content').set(home.secondSection.secondSection_Second_Content);
+
+    root.child('secondSection').child('secondSection_First_Btn').set(home.secondSection.secondSection_First_Btn);
+    root.child('secondSection').child('secondSection_First_Btn_link').set(home.secondSection.secondSection_First_Btn_link);
+    root.child('secondSection').child('secondSection_Second_Btn').set(home.secondSection.secondSection_Second_Btn);
+    root.child('secondSection').child('secondSection_Second_Btn_link').set(home.secondSection.secondSection_Second_Btn_link);
+
+    root.child('thirdSection').child('thirdSection_First_Heading').set(home.thirdSection.thirdSection_First_Heading);
+    root.child('thirdSection').child('thirdSection_First_Content').set(home.thirdSection.thirdSection_First_Content);
+
+    root.child('thirdSection').child('thirdSection_Second_Heading').set(home.thirdSection.thirdSection_Second_Heading);
+    root.child('thirdSection').child('thirdSection_Second_Content').set(home.thirdSection.thirdSection_Second_Content);
+    
+    root.child('thirdSection').child('thirdSection_Third_Heading').set(home.thirdSection.thirdSection_Third_Heading);
+    root.child('thirdSection').child('thirdSection_Third_Content').set(home.thirdSection.thirdSection_Third_Content);
+
+    root.child('thirdSection').child('thirdSection_Fourth_Heading').set(home.thirdSection.thirdSection_Fourth_Heading);
+    root.child('thirdSection').child('thirdSection_Fourth_Content').set(home.thirdSection.thirdSection_Fourth_Content);
+
+    
+    Swal.fire(
+      'Good job!',
+      'You updated the about page!',
+      'success'
+    );
+  });
+}
+
+getHome = function(){
+  var root = firebase.database().ref().child("CMS/Home");
+  var home = {};
+  root.on("value", snap =>{
+    home = snap.val();
+
+    $("#home-first__video-link").val(home.firstSection.firstSection_video);
+    $("#home-first__heading-title").val(home.firstSection.firstSection_Heading);
+    $("#home-first__btn-name").val(home.firstSection.firstSection_button);
+    $("#home-first__btn-link").val(home.firstSection.firstSection_button_link);
+
+    $("#home-second__first-heading").val(home.secondSection.secondSection_First_Heading);
+    $("#home-second__first-content").val(home.secondSection.secondSection_First_Content);
+    $("#home-second__second-heading").val(home.secondSection.secondSection_Second_Heading);
+    $("#home-second__second-content").val(home.secondSection.secondSection_Second_Content);
+
+    $("#home-second__first-btn").val(home.secondSection.secondSection_First_Btn);
+    $("#home-second__first-btn-link").val(home.secondSection.secondSection_First_Btn_link);
+    $("#home-second__second-btn").val(home.secondSection.secondSection_Second_Btn);
+    $("#home-second__second-btn-link").val(home.secondSection.secondSection_Second_Btn_link);
+
+    $("#first-heading").val(home.thirdSection.thirdSection_First_Heading);
+    $("#first-content").val(home.thirdSection.thirdSection_First_Content);
+    $("#second-heading").val(home.thirdSection.thirdSection_Second_Heading);
+    $("#second-content").val(home.thirdSection.thirdSection_Second_Content);
+    $("#third-heading").val(home.thirdSection.thirdSection_Third_Heading);
+    $("#third-content").val(home.thirdSection.thirdSection_Third_Content);
+    $("#fourth-heading").val(home.thirdSection.thirdSection_Fourth_Heading);
+    $("#fourth-content").val(home.thirdSection.thirdSection_Fourth_Content);
+
+  });
+}
+
 var createCauses = function(){
   $("#frm-create-cause").submit(function(e){
     
@@ -849,6 +993,11 @@ var updateAbout = function(){
     var about = {
       mission : $("#about-mission").val(),
       vision : $("#about-vision").val(),
+      first_section: {
+        heading: $("#about-heading").val(),
+        sub_heading:$("#about-sub_heading").val(),
+        content :$("#about-content").val(),
+      },
       person_1 : {
         name : $("#about-name-1").val(),
         role : $("#about-role-1").val(),
@@ -877,6 +1026,11 @@ var updateAbout = function(){
     };
     root.child('mission').set(about.mission);
     root.child('vision').set(about.vision);
+
+    root.child('first_section').child('heading').set(about.first_section.heading);
+    root.child('first_section').child('sub_heading').set(about.first_section.sub_heading);
+    root.child('first_section').child('content').set(about.first_section.content);
+
     root.child('person_1').child('name').set(about.person_1.name);
     root.child('person_1').child('role').set(about.person_1.role);
     root.child('person_1').child('content').set(about.person_1.content);
@@ -913,6 +1067,9 @@ var getAbout = function(){
     $("#about-mission").val(about.mission);
     $("#about-vision").val(about.vision);
 
+    $("#about-heading").val(about.first_section.heading),
+    $("#about-sub_heading").val(about.first_section.sub_heading),
+    $("#about-content").val(about.first_section.content),
     
     $("#about-name-1").val(about.person_1.name);
     $("#about-role-1").val(about.person_1.role);
@@ -930,9 +1087,6 @@ var getAbout = function(){
     $("#about-role-5").val(about.person_5.role);
     $("#about-content-5").val(about.person_5.content);
 
-    // $("#about-mission").val(contact.address);
-    console.log(about);
-    // console.log(contact.address);
   });
   
 }
@@ -979,59 +1133,3 @@ var viewRatings = function(){
 }
 
 
-var checkReport = function(){
-  // var storageUserRole = localStorage.getItem("site_role");
-
-  // var rootRef = firebase.database().ref().child("Reports");
-  // rootRef.once('value', function(snapshot) {
-  //   if (snapshot.exists() && storageUserRole == "Admin") {
-  //     Swal.fire(snapshot.child("TypeOfReport").val());
-  //   }
-  // });
-}
-
-var sendEmail = function(){
-  const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const nodemailer = require('nodemailer');
-const cors = require('cors')({origin: true});
-admin.initializeApp();
-
-/**
-* Here we're using Gmail to send 
-*/
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'yourgmailaccount@gmail.com',
-        pass: 'yourgmailaccpassword'
-    }
-});
-
-exports.sendMail = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      
-        // getting dest email by query string
-        const dest = req.query.dest;
-
-        const mailOptions = {
-            from: 'Your Account Name <yourgmailaccount@gmail.com>', // Something like: Jane Doe <janedoe@gmail.com>
-            to: dest,
-            subject: 'I\'M A PICKLE!!!', // email subject
-            html: `<p style="font-size: 16px;">Pickle Riiiiiiiiiiiiiiiick!!</p>
-                <br />
-                <img src="https://images.prod.meredith.com/product/fc8754735c8a9b4aebb786278e7265a5/1538025388228/l/rick-and-morty-pickle-rick-sticker" />
-            ` // email content in HTML
-        };
-  
-        // returning result
-        return transporter.sendMail(mailOptions, (erro, info) => {
-            if(erro){
-                return res.send(erro.toString());
-            }
-            return res.send('Sended');
-        });
-    });    
-});
-
-}
