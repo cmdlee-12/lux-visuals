@@ -225,7 +225,7 @@ getCausesPage = function (){
 }
 
 getBlogs = function(){
-    var rootRef = firebase.database().ref().child("Blogs");
+    var rootRef = firebase.database().ref().child("Blogs").orderByChild("is_active").equalTo("yes");
     rootRef.on("child_added", snap => {
         
         var cause_id = snap.child("cause_id").val();

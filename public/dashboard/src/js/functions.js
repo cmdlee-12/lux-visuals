@@ -947,6 +947,7 @@ $(document).ready(function(){
     var rootRef = firebase.database().ref().child("Blogs");
     var is_active = data[4] == 'yes' ? 'no' : 'yes';
     rootRef.child(data[0]).update({'is_active' : is_active});
+    console.log(data[0] + is_active)
     Swal.fire(
       'Good job!',
       'You updated the blog!',
