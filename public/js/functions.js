@@ -206,7 +206,7 @@ getHome = function (){
 }
 
 getCausesPage = function (){
-    var rootRef = firebase.database().ref().child("CMS/Cause");
+    var rootRef = firebase.database().ref().child("CMS/Cause").orderByChild("is_active").equalTo("yes");;
     rootRef.on("child_added", snap => {
         
         var cause_id = snap.child("cause_id").val();
