@@ -513,106 +513,69 @@ var viewReports = function(){
   var storageUserID = localStorage.getItem("site_userID");
   var storageUserRole = localStorage.getItem("site_role");
   //view reports for users
-  if(storageUserRole == 'User'){
     var table = $('#reportTable').DataTable();
+    table.clear().draw();
+  if(storageUserRole == 'User'){
     var rootRef = firebase.database().ref().child("Reports").orderByChild("userID").equalTo(storageUserID);
     rootRef.on("child_added", snap => {
       var userID = snap.child("userID").val();
       var ref = firebase.database().ref().child("Users").orderByChild("userID").equalTo(userID);
       ref.on("child_added", snapShot => {
-
-        var dataSet = [snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), snap.child("TypeOfReport").val(), snap.child("street").val(), snap.child("barangay").val(), 
-        snap.child("date").val(),snap.child("time").val(), snap.child("description").val(), snap.child("status").val(),
-        "<button type=\"button\" class=\"btn btn-danger\" id=\"cancel-"+snap.child("id").val()+"\"><i class=\"fas fa-minus-circle\"></i></button>"];
+        var status = snap.child('status').val();
+        var btnIcon = status == "Confirmed" ? "danger fas fa-minus-circle" : "warning fas fa-edit";
+        var btnHtml = '<button type="button" class="btn btn-sm '+ btnIcon + '" > </button>';
+        var dataSet = [
+          snap.child('id').val(),
+          snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), 
+          snap.child("TypeOfReport").val(), snap.child("street").val(), 
+          snap.child("barangay").val(),snap.child("date").val(),
+          snap.child("time").val(), snap.child("description").val(), snap.child("status").val(),
+          btnHtml
+          ];
         table.rows.add([dataSet]).draw();
   
         //cancel appointment
-        $("#cancel-"+snap.child("id").val()).click(function (){
-          Swal.fire({
-            title: 'Are you sure you want to cancel your appointment?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Proceed'
-          }).then((result) => {
-            if (result.value) {
-              Swal.fire(
-                'Cancelled!',
-                'Your appointment has been cancelled.',
-                'success'
-              )
-              let report = firebase.database().ref("Reports/" + snap.child("id").val());
-              report.remove();
-            }
-          })
-        })
+          // $("#cancel-"+snap.child("id").val()).click(function (){
+          //   Swal.fire({
+          //     title: 'Are you sure you want to cancel your appointment?',
+          //     text: "You won't be able to revert this!",
+          //     icon: 'warning',
+          //     showCancelButton: true,
+          //     confirmButtonColor: '#3085d6',
+          //     cancelButtonColor: '#d33',
+          //     confirmButtonText: 'Proceed'
+          //   }).then((result) => {
+          //     if (result.value) {
+          //       Swal.fire(
+          //         'Cancelled!',
+          //         'Your appointment has been cancelled.',
+          //         'success'
+          //       )
+          //       let report = firebase.database().ref("Reports/" + snap.child("id").val());
+          //       report.remove();
+          //     }
+          //   })
+          // })
       });
     });
   }else{
-    var table = $('#reportTable').DataTable();
     var rootRef = firebase.database().ref().child("Reports");
     rootRef.on("child_added", snap => {
         var userID = snap.child("userID").val();
         var ref = firebase.database().ref().child("Users").orderByChild("userID").equalTo(userID);
         ref.on("child_added", snapShot => {
 
-          var dataSet = [snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), snap.child("TypeOfReport").val(), snap.child("street").val(), snap.child("barangay").val(), 
-          snap.child("date").val(),snap.child("time").val(), snap.child("description").val(),snap.child("status").val(),
-          "<button type=\"button\" class=\"btn btn-warning mr-2\" id=\"edit-"+snap.child("id").val()+"\"><i class=\"fas fa-edit\"></i></button>"+
-          "<button type=\"button\" class=\"btn btn-danger\" id=\"cancel-"+snap.child("id").val()+"\"><i class=\"fas fa-minus-circle\"></i></button>"];
-          table.rows.add([dataSet]).draw();
+          var status = snap.child('status').val();
+          var btnIcon = status == "Confirmed" ? "btn-danger fas fa-minus-circle" : "btn-warning fas fa-edit";
+          var btnHtml = '<button type="button" class="btn btn-sm '+ btnIcon + '" > </button>';
 
-          //change status
-          $("#edit-"+snap.child("id").val()).click(function (){
-            Swal.fire({
-              title: 'Confirm appointment?',
-              text: "Check all details before confirming it!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Confirm'
-            }).then((result) => {
-              if (result.value) {
-                console.log(result.value)
-                Swal.fire(
-                  'Confirmed!',
-                  snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val()+'s ' +'appointment has been confirmed.',
-                  'success'
-                )
-                var reportID = snap.child("id").val();
-                var rootRef = firebase.database().ref().child("Reports").child(reportID);
-                console.log(reportID)
-                rootRef.child("status").set("Confirmed");
-              }
-            })
-          })
-        
-          //cancel appointment
-          $("#cancel-"+snap.child("id").val()).click(function (){
-            Swal.fire({
-              title: 'Are you sure you want to cancel your appointment?',
-              text: "You won't be able to revert this!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Proceed'
-            }).then((result) => {
-              if (result.value) {
-                console.log(result.value)
-                Swal.fire(
-                  'Cancelled!',
-                  'Your appointment has been cancelled.',
-                  'success'
-                )
-                let report = firebase.database().ref("Reports/" + snap.child("id").val());
-                report.remove();
-              }
-            })
-          })
+          var dataSet = [
+            snap.child('id').val(),snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), snap.child("TypeOfReport").val(), snap.child("street").val(), snap.child("barangay").val(), 
+            snap.child("date").val(),snap.child("time").val(), snap.child("description").val(),snap.child("status").val(),
+            btnHtml
+          ];
+          table.rows.add([dataSet]).draw();
+          
         });
     });
   }
@@ -671,7 +634,7 @@ var viewUsers = function(){
   table.clear().draw();
   rootRef.on("child_added", snap => {
     
-    var btnText = (snap.child("is_active").val() == 'no' ? 'Deactivate' : 'Activate');
+    var btnText = (snap.child("is_active").val() == 'yes' ? 'Deactivate' : 'Activate');
     var btnClass = (snap.child("is_active").val() == 'no' ? 'success' : 'warning');
     var dataSet = [
       snap.child("userID").val(),
@@ -685,28 +648,87 @@ var viewUsers = function(){
 
 var createBlog = function(){
   $("#frm-create-blog").submit(function(e){
+    e.preventDefault();
     var formData = $(this).serialize();
+    // database
     var root = firebase.database().ref().child("Blogs");
     var key = root.push().key;
-    var heading = $("#blog-heading").val();
-    var content = $("#blog-content").val();
-    var link = $("#blog-link").val();
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
-    var dateTime = date+' '+time;
-    root.child(key).child("blogID").set(key);
-    root.child(key).child("heading").set(heading);
-    root.child(key).child("content").set(content);
-    root.child(key).child("link").set(link);
-    root.child(key).child("date_posted").set(dateTime);
-    root.child(key).child("is_active").set('yes');
-    Swal.fire(
-      'Good job!',
-      'You added a new blog!',
-      'success'
-    );
-    console.log(formData);
+    //storage
+    var storage = firebase.storage();
+    var imgFile = document.querySelector('#blog-img').files[0];//$("#blog-img").get(0);//.files[0];
+    console.log(imgFile);
+    
+    const metadata = { contentType: imgFile.type };
+    var storageRef = storage.ref().child("images/Blogs/" + key);
+    const uploadTask = storageRef.put(imgFile, metadata);
+    var link = "";
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+      function(snapshot) {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      }, function(error) {
+
+      // A full list of error codes is available at
+      // https://firebase.google.com/docs/storage/web/handle-errors
+      switch (error.code) {
+        case 'storage/unauthorized':
+          console.log(error.code);
+          // User doesn't have permission to access the object
+          break;
+
+        case 'storage/canceled':
+          console.log(error.code);
+          // User canceled the upload
+          break;
+
+        case 'storage/unknown':
+          console.log(error.code);
+          // Unknown error occurred, inspect error.serverResponse
+          break;
+      }
+    }, function() {
+      // Upload completed successfully, now we can get the download URL
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        console.log('File available at', downloadURL);
+        link = downloadURL;
+        
+          var heading = $("#blog-heading").val();
+          var content = $("#blog-content").val(); 
+          var today = new Date();
+          var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+          var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
+          var dateTime = date+' '+time;
+          root.child(key).child("blogID").set(key);
+          root.child(key).child("heading").set(heading);
+          root.child(key).child("content").set(content);
+          root.child(key).child("link").set(link);
+          root.child(key).child("date_posted").set(dateTime);
+          root.child(key).child("is_active").set('yes');
+          Swal.fire(
+            'Good job!',
+            'You added a new blog!',
+            'success'
+          );
+          console.log(formData);
+      });
+    });
+    // task
+    //   .then(snapshot => snapshot.ref.getDownloadURL())
+    //   .then((url) => {
+    //     console.log(url);
+    //     // document.querySelector('#someImageTagID').src = url;
+    //   })
+    //   .catch(console.error);
+
   });
 }
 var viewBlogs = function(){
@@ -875,30 +897,85 @@ getHome = function(){
 
 var createCauses = function(){
   $("#frm-create-cause").submit(function(e){
-    
+    e.preventDefault();
     var formData = $(this).serialize();
     var root = firebase.database().ref().child("CMS/Cause");
     var key = root.push().key;
-    var heading = $("#cause-heading").val();
-    var content = $("#cause-content").val();
-    var link = $("#cause-link").val();
-    var isactive = $("#cause-is_active").val();
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
-    var dateTime = date+' '+time;
-    root.child(key).child("cause_id").set(key);
-    root.child(key).child("heading").set(heading);
-    root.child(key).child("content").set(content);
-    root.child(key).child("link").set(link);
-    root.child(key).child("is_active").set(isactive);
-    root.child(key).child("created_at").set(dateTime);
+
+    //storage
+    var storage = firebase.storage();
+    var imgFile = document.querySelector('#cause-img').files[0];//$("#blog-img").get(0);//.files[0];
+    console.log(imgFile);
     
-    Swal.fire(
-      'Good job!',
-      'You added a new cause!',
-      'success'
-    );
+    const metadata = { contentType: imgFile.type };
+    var storageRef = storage.ref().child("images/Cause/" + key);
+    const uploadTask = storageRef.put(imgFile, metadata);
+    var link = "";
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+      function(snapshot) {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      }, function(error) {
+
+      // A full list of error codes is available at
+      // https://firebase.google.com/docs/storage/web/handle-errors
+      switch (error.code) {
+        case 'storage/unauthorized':
+          console.log(error.code);
+          // User doesn't have permission to access the object
+          break;
+
+        case 'storage/canceled':
+          console.log(error.code);
+          // User canceled the upload
+          break;
+
+        case 'storage/unknown':
+          console.log(error.code);
+          // Unknown error occurred, inspect error.serverResponse
+          break;
+      }
+    }, function() {
+      // Upload completed successfully, now we can get the download URL
+      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        console.log('File available at', downloadURL);
+        imgUrl = downloadURL;
+        
+          var heading = $("#cause-heading").val();
+          var content = $("#cause-content").val();
+          var link = $("#cause-link").val();
+          var isactive = $("#cause-is_active").val();
+          var today = new Date();
+          var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+          var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
+          var dateTime = date+' '+time;
+          root.child(key).child("cause_id").set(key);
+          root.child(key).child("heading").set(heading);
+          root.child(key).child("content").set(content);
+          root.child(key).child("link").set(link);
+          root.child(key).child("img_url").set(imgUrl);
+          root.child(key).child("is_active").set(isactive);
+          root.child(key).child("created_at").set(dateTime);
+          
+          Swal.fire(
+            'Good job!',
+            'You added a new cause!',
+            'success'
+          );
+          console.log(formData);
+      });
+    });
+    
+
   });
 }
 var viewCause = function(){
@@ -907,7 +984,7 @@ var viewCause = function(){
   // table.ajax.reload();
   table.clear().draw();
   rootRef.on("child_added", snap => {
-    var btnText = (snap.child("is_active").val() == 'no' ? 'Deactivate' : 'Activate');
+    var btnText = (snap.child("is_active").val() == 'yes' ? 'Deactivate' : 'Activate');
     var btnClass = (snap.child("is_active").val() == 'no' ? 'success' : 'warning');
     var dataSet = [
       snap.child("cause_id").val(),
@@ -927,6 +1004,8 @@ $(document).ready(function(){
   var blogsTable = $("#blogsTable").DataTable();
   var userTable = $("#userTable").DataTable();
   var messageTable = $("#messageTable").DataTable();
+  var ratingsTable = $("#ratingsTable").DataTable();
+  var reportsTable = $("#reportTable").DataTable();
   $('#causeTable tbody').on( 'click', 'button', function () {
     var data = table.row( $(this).parents('tr') ).data();
     
@@ -982,6 +1061,54 @@ $(document).ready(function(){
       'success'
     );
     viewMessages();
+  });
+  
+  $('#ratingsTable tbody').on( 'click', 'button', function () {
+    var data = ratingsTable.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("Ratings");
+    var is_active = data[2] == 'yes' ? 'no' : 'yes'; 
+    rootRef.child(data[0]).update({'is_active' : is_active});
+    Swal.fire(
+      'Good job!',
+      'You updated the ratings!',
+      'success'
+    );
+    viewRatings();
+  });
+  
+  $('#reportTable tbody').on( 'click', 'button', function () {
+    var data = reportsTable.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("Reports");
+    console.log(data);
+    var status = data[8] == 'Confirmed' ? 'Unconfirmed' : 'Confirmed'; 
+    var statusTxt = (data[8] == "Confirmed" ? "Cancel" : "Confirm"); 
+    console.log(status);
+    console.log(statusTxt);
+    Swal.fire({
+          title: statusTxt + ' appointment?',
+          text: "Check all details before confirming it!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: statusTxt
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Confirmed!',
+              data[1] +'\'s ' +'appointment has been '+ statusTxt + '.',
+              'success'
+            )
+            
+            rootRef.child(data[0]).update({'status' : status});
+            // console.log(reportID)
+            
+            viewReports();
+          }
+      });
+      
   });
   
 });

@@ -215,7 +215,7 @@ getCausesPage = function (){
         $(".causes-wrapper-page").append(
             "<div class=\"col-lg-4\">" +
                 "<div class=\"causes causes-2 text-center pb-4 px-md-4\">" +
-                    "<div class=\"img\" style=\"background-image: url(images/pic-2.jpg);\"></div>" +
+                    "<div class=\"img\" style=\"background-image: url('" + cause.img_url + "');\"></div>" +
                     "<h2 class=\"causes-heading\"><a target='_blank' href='"+cause.link+"'>"+cause.heading+"</a></h2>"+
                     "<p class=\"causes-content\">"+cause.content+"</p>"+
                 "</div>" +
@@ -234,7 +234,7 @@ getBlogs = function(){
         $(".blogs-wrapper").append(
             '<div class="col-md-12">' +
                 '<div class="blog-entry align-self-stretch d-md-flex">' +
-                    `<a href="#" class="block-20" style="background-image: url('images/blog-2.jpg');">` +
+                    `<a href="#" class="block-20" style="background-image: url('`+ cause.link + `');">` +
                     '</a>' +
                     '<div class="text d-block pl-md-4">' +
                     '    <div class="meta mb-3">' +
@@ -260,14 +260,15 @@ getShowBlog = function(){
     var showBlog = {};
     root.on("value", snap => {
         showBlog = snap.val();
+        
+        $("#blog-img").append("<img class=\"img\" src=\"" + showBlog.link + "\" width='200px' height='200px'>");
         $("#blog-breadcrumb-heading").text(showBlog.heading); 
         $("#blog-heading").text(showBlog.heading); 
         $("#blog-date").text(showBlog.date_posted); 
         $("#blog-content").text(showBlog.content); 
         console.log(showBlog);
     });
-    console.log(root);
-    console.log(key);
+    
 }
 
 getUrlParam = function(){
