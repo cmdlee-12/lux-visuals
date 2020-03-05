@@ -408,7 +408,7 @@ var setStreets = function (){
       select.options[select.options.length] = new Option(streets[index], index);
   }
 }
-//add report
+//add report - Report an Incident
 var addReport = function (){
   $(".btn-submit-report").click(function(){
 
@@ -422,9 +422,10 @@ var addReport = function (){
     var storageUserID = localStorage.getItem("site_userID");
     var storageUserRole = localStorage.getItem("site_role");
     var userID = $("#user").val();
+
     if(typeOfReport != "" && street != "" && barangay != "" && date != "" && time != "" && description != ""){
       var root = firebase.database().ref().child("Reports");
-      var key = root.push().key;
+      var key = root.push().key; // unique id 
       console.log(userID)
       console.log(storageUserID)
       console.log(storageUserRole)
@@ -470,6 +471,16 @@ var addReport = function (){
     }
   })
 }
+
+// get all user account when login as admin - report an incident
+var showUserSelect = function(){
+  var rootRef = firebase.database().ref().child("Users");
+  rootRef.on("child_added", snap => {
+      $("#user").append("<option value='"+snap.child("userID").val()+"'>"+snap.child("userFirstName").val()+" "+snap.child("userLastName").val()+"</option>");
+  });
+}
+
+
 // view user Profile
 getProfile = function(){
   var storageUserID = localStorage.getItem("site_userID");
@@ -513,12 +524,14 @@ var viewReports = function(){
   var storageUserID = localStorage.getItem("site_userID");
   var storageUserRole = localStorage.getItem("site_role");
   //view reports for users
-    var table = $('#reportTable').DataTable();
-    table.clear().draw();
+  var table = $('#reportTable').DataTable();
+  table.clear().draw();
+
   if(storageUserRole == 'User'){
     var rootRef = firebase.database().ref().child("Reports").orderByChild("userID").equalTo(storageUserID);
     rootRef.on("child_added", snap => {
       var userID = snap.child("userID").val();
+
       var ref = firebase.database().ref().child("Users").orderByChild("userID").equalTo(userID);
       ref.on("child_added", snapShot => {
         var status = snap.child('status').val();
@@ -533,29 +546,6 @@ var viewReports = function(){
           btnHtml
           ];
         table.rows.add([dataSet]).draw();
-  
-        //cancel appointment
-          // $("#cancel-"+snap.child("id").val()).click(function (){
-          //   Swal.fire({
-          //     title: 'Are you sure you want to cancel your appointment?',
-          //     text: "You won't be able to revert this!",
-          //     icon: 'warning',
-          //     showCancelButton: true,
-          //     confirmButtonColor: '#3085d6',
-          //     cancelButtonColor: '#d33',
-          //     confirmButtonText: 'Proceed'
-          //   }).then((result) => {
-          //     if (result.value) {
-          //       Swal.fire(
-          //         'Cancelled!',
-          //         'Your appointment has been cancelled.',
-          //         'success'
-          //       )
-          //       let report = firebase.database().ref("Reports/" + snap.child("id").val());
-          //       report.remove();
-          //     }
-          //   })
-          // })
       });
     });
   }else{
@@ -621,13 +611,7 @@ var viewAppointment = function(){
 
 }
 
-var showUserSelect = function(){
-  var rootRef = firebase.database().ref().child("Users");
-  rootRef.on("child_added", snap => {
-      $("#user").append("<option value='"+snap.child("userID").val()+"'>"+snap.child("userFirstName").val()+" "+snap.child("userLastName").val()+"</option>");
-  });
-}
-
+// view users
 var viewUsers = function(){
   var table = $('#userTable').DataTable();
   var rootRef = firebase.database().ref().child("Users");
@@ -642,10 +626,11 @@ var viewUsers = function(){
       snap.child("userEmail").val(),
       snap.child('is_active').val(),
       '<button class="btn btn-sm btn-' + btnClass + ' btn-cause-active">' + btnText + '</button>'];
-      table.rows.add([dataSet]).draw();
+      table.rows.add([dataSet]).draw(); //add data from firebase to table
   });
 }
 
+// add blog
 var createBlog = function(){
   $("#frm-create-blog").submit(function(e){
     e.preventDefault();
@@ -721,16 +706,10 @@ var createBlog = function(){
           console.log(formData);
       });
     });
-    // task
-    //   .then(snapshot => snapshot.ref.getDownloadURL())
-    //   .then((url) => {
-    //     console.log(url);
-    //     // document.querySelector('#someImageTagID').src = url;
-    //   })
-    //   .catch(console.error);
 
   });
 }
+// view blogs
 var viewBlogs = function(){
   var table = $('#blogsTable').DataTable();
   var rootRef = firebase.database().ref().child("Blogs");
@@ -789,6 +768,7 @@ var getContact = function(){
   
 }
 
+// update home on cms
 var updateHome = function(){
   $("#frm-home").submit(function(e){
     e.preventDefault();
@@ -862,7 +842,8 @@ var updateHome = function(){
   });
 }
 
-getHome = function(){
+// get values of home on cms
+var getHome = function(){
   var root = firebase.database().ref().child("CMS/Home");
   var home = {};
   root.on("value", snap =>{
@@ -958,6 +939,7 @@ var createCauses = function(){
           var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
           var time = (today.getHours() > 9 ? today.getHours() : ("0" + today.getHours()) ) + ":" + (today.getMinutes() > 9 ? today.getMinutes() : ("0" + today.getMinutes())) + ":" + (today.getSeconds() > 9 ? today.getSeconds() : ("0" + today.getSeconds()));
           var dateTime = date+' '+time;
+          // create child
           root.child(key).child("cause_id").set(key);
           root.child(key).child("heading").set(heading);
           root.child(key).child("content").set(content);
@@ -999,6 +981,7 @@ var viewCause = function(){
   
 }
 
+
 $(document).ready(function(){
   var table = $('#causeTable').DataTable();
   var blogsTable = $("#blogsTable").DataTable();
@@ -1035,6 +1018,7 @@ $(document).ready(function(){
     viewBlogs();
   });
   
+  // activate/inactive user
   $('#userTable tbody').on( 'click', 'button', function () {
     var data = userTable.row( $(this).parents('tr') ).data();
     
@@ -1077,6 +1061,7 @@ $(document).ready(function(){
     viewRatings();
   });
   
+  // confirming reports
   $('#reportTable tbody').on( 'click', 'button', function () {
     var data = reportsTable.row( $(this).parents('tr') ).data();
     

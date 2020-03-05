@@ -67,7 +67,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Lux Visuals<span>.</span></a>
+      <a class="navbar-brand" href="index.html">Gender and Development<span>.</span></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> Menu
@@ -77,7 +77,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
           <li class="nav-item"><a href="about.html" class="nav-link">Who we are</a></li>
-          <li class="nav-item"><a href="causes.html" class="nav-link">Causes</a></li>
+          <li class="nav-item"><a href="causes.html" class="nav-link">Articles</a></li>
           <li class="nav-item"><a href="blog.html" class="nav-link">Stories</a></li>
           <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
           <li class="nav-item userSession"></li>
@@ -96,10 +96,10 @@
           <h1 id="home-first__heading-title" class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"></h1>
           <p class="home-first__btn-name"></p>
         </div>
-        <div class="col-md-6 d-none d-md-block">
+        <div class="col-md-6 d-none d-md-block" style="z-index:1;">
           <div class="play-video pb-5 d-flex align-items-center">
             <p class="home-first__video-link"></p>
-            <h3 style="color: #fff;z-index: 999;margin-left: 2px;margin-top: auto;padding-bottom: 16px;" >
+            <h3 style="color: #fff;z-index: 999;margin-left: 2px;margin-top: auto;padding-bottom: 16px;" class="rating-wrapper">
               RATE 
               <div class="my-rating-4" data-rating="2.5"></div>
             </h3>
@@ -255,7 +255,7 @@
       </div>
       <div class="row">
         <div class="col-md-12 text-center">
-          <p> Copyright &copy; 2019 Lux Visuals. </p>
+          <p> Copyright &copy; 2019 Gender and Development. </p>
           <p> All Rights Reserved </p>
         </div>
       </div>
@@ -314,6 +314,7 @@
     console.log(storageUser)
     if (storageUser == undefined) {
       $(".userSession").html("<a href=\"login.html\" class=\"nav-link\">Login</a>");
+      $(".rating-wrapper").css("display","none");
     } else {
       $(".userSession").append("<a href=\"dashboard/user/index.html\" class=\"nav-link\">Profile</a>");
     }
