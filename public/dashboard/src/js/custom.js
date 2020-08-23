@@ -23,6 +23,12 @@ $(document).ready(function(){
     updateHome();
     getProfile();
     updateProfile();
+    getUserCount();
+    getAppointmentCount();
+    getReportsCount();
+    getMessagesCount();
+    getReportChart();
+    getUserChart();
 })
 
 

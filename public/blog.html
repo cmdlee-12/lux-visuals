@@ -29,6 +29,23 @@
 </head>
 
 <body>
+    <!-- modal consent -->
+    <div class="modal" tabindex="-1" role="dialog" id="mymodal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Story Consent</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>All stories posted on our site (seeingthesigns.com) are all approved by the client before posting it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of modal consent -->
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="index.html">Gender and Development<span>.</span></a>
@@ -40,8 +57,8 @@
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="about.html" class="nav-link">Who we are</a></li>
-          <li class="nav-item"><a href="causes.html" class="nav-link">Articles</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About GAD</a></li>
+          <li class="nav-item"><a href="causes.html" class="nav-link">Causes</a></li>
           <li class="nav-item active"><a href="blog.html" class="nav-link">Stories</a></li>
           <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
           <li class="nav-item userSession"></li>
@@ -56,7 +73,7 @@
     <div class="container">
       <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate pb-5 text-center">
-          <h2 class="mb-3 bread">Case Studies</h2>
+          <h2 class="mb-3 bread">Stories</h2>
           <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
                   class="ion-ios-arrow-forward"></i></a></span> <span>Blog <i class="ion-ios-arrow-forward"></i></span>
           </p>
@@ -78,7 +95,6 @@
       </div>
     </div>
   </section> <!-- .section -->
-
   <footer class="ftco-footer ftco-section">
     <div class="container">
       <div class="row mb-5">
@@ -96,7 +112,7 @@
             <h2 class="ftco-heading-2">Links</h2>
             <ul class="list-unstyled">
               <li><a href="index.html" class="py-2 d-block">Home</a></li>
-              <li><a href="about.html" class="py-2 d-block">Who we are</a></li>
+              <li><a href="about.html" class="py-2 d-block">About GAD</a></li>
               <li><a href="causes.html" class="py-2 d-block">Causes</a></li>
               <li><a href="blog.html" class="py-2 d-block">Blog</a></li>
               <li><a href="contact.html" class="py-2 d-block">Contact</a></li>
@@ -182,7 +198,11 @@
     if (storageUser == undefined) {
       $(".userSession").html("<a href=\"login.html\" class=\"nav-link\">Login</a>");
     } else {
-      $(".userSession").append("<a href=\"dashboard/user/index.html\" class=\"nav-link\">Profile</a>");
+      if(siteRole == "User"){
+        $(".userSession").append("<a href=\"dashboard/user/reports.html\" class=\"nav-link\">Profile</a>");
+      }else{
+        $(".userSession").append("<a href=\"dashboard/user/index.html\" class=\"nav-link\">Profile</a>");
+      }
     }
   </script>
   <script src="js/jquery.star-rating-svg.js"></script>

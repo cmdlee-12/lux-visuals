@@ -86,3 +86,39 @@ button.btn.card-task {
 .user-wrapper i.fas.fa-user-circle {
     font-size: 100px;
 }
+
+.col-summary-wrapper .row {
+    margin: 10px;
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.project-wrapper .col-summary-wrapper .count-users {
+    font-size: 40px;
+    color: #ffb400;
+    font-weight: 700;
+}
+
+.project-wrapper .col-summary-wrapper .count-appointment{
+    font-size: 40px;
+    color: #F02E05;
+    font-weight: 700;
+
+}
+
+.project-wrapper .col-summary-wrapper .count-reports{
+    font-size: 40px;
+    color: #0A62F0;
+    font-weight: 700;
+}
+
+.project-wrapper .col-summary-wrapper .count-messages{
+    font-size: 40px;
+    color: #6B02E3;
+    font-weight: 700;
+}
+
+.project-wrapper .col-summary-wrapper i{
+    font-size: 40px;
+}

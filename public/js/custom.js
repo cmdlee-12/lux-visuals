@@ -7,6 +7,7 @@ $(document).ready(function(){
     getBlogs();
     getHome();
     getShowBlog();
+    //showConsentModal();
 })
 
 

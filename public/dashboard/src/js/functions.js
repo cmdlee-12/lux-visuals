@@ -41,7 +41,12 @@ var authLogin = function () {
               localStorage.setItem("site_userPW", password);
               localStorage.setItem("site_role", userRole);
               localStorage.setItem("site_userStatus", userStatus);
-              window.location = "dashboard/user/index.html";
+
+              if(userRole == "User"){
+                window.location = "dashboard/user/reports.html";
+              }else{
+                window.location = "dashboard/user/index.html";
+              }
             }
           });
         } else {
@@ -418,6 +423,7 @@ var addReport = function (){
     var city = "Pasig City";
     var date = $("#date").val();
     var time = $("#time").val();
+    var consent = $("#consent").prop('checked');
     var description = $("#descriptionOfReport").val();
     var storageUserID = localStorage.getItem("site_userID");
     var storageUserRole = localStorage.getItem("site_role");
@@ -440,6 +446,7 @@ var addReport = function (){
           root.child(key).child("time").set(time);
           root.child(key).child("description").set(description);
           root.child(key).child("status").set("Unconfirmed");
+          root.child(key).child("has_consent").set(consent);
         }else{
           root.child(key).child("id").set(key);
           root.child(key).child("userID").set(userID);
@@ -451,6 +458,7 @@ var addReport = function (){
           root.child(key).child("time").set(time);
           root.child(key).child("description").set(description);
           root.child(key).child("status").set("Unconfirmed");
+          root.child(key).child("has_consent").set(consent);
         }
 
         Swal.fire(
@@ -542,7 +550,7 @@ var viewReports = function(){
           snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), 
           snap.child("TypeOfReport").val(), snap.child("street").val(), 
           snap.child("barangay").val(),snap.child("date").val(),
-          snap.child("time").val(), snap.child("description").val(), snap.child("status").val(),
+          snap.child("time").val(), snap.child("description").val(), snap.child("has_consent").val(), snap.child("status").val(),
           btnHtml
           ];
         table.rows.add([dataSet]).draw();
@@ -556,12 +564,13 @@ var viewReports = function(){
         ref.on("child_added", snapShot => {
 
           var status = snap.child('status').val();
+          console.log(status)
           var btnIcon = status == "Confirmed" ? "btn-danger fas fa-minus-circle" : "btn-warning fas fa-edit";
           var btnHtml = '<button type="button" class="btn btn-sm '+ btnIcon + '" > </button>';
 
           var dataSet = [
             snap.child('id').val(),snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), snap.child("TypeOfReport").val(), snap.child("street").val(), snap.child("barangay").val(), 
-            snap.child("date").val(),snap.child("time").val(), snap.child("description").val(),snap.child("status").val(),
+            snap.child("date").val(),snap.child("time").val(), snap.child("description").val(),  snap.child("has_consent").val(),snap.child("status").val(),
             btnHtml
           ];
           table.rows.add([dataSet]).draw();
@@ -585,7 +594,7 @@ var viewAppointment = function(){
       ref.on("child_added", snapShot => {
         if(snap.child("status").val() == "Confirmed"){
           var dataSet = [snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), snap.child("TypeOfReport").val(), snap.child("street").val(), snap.child("barangay").val(), 
-          snap.child("city").val(), snap.child("date").val(),snap.child("time").val(), snap.child("description").val(), 
+          snap.child("city").val(), snap.child("date").val(),snap.child("time").val(), snap.child("description").val(),  snap.child("has_consent").val(),
           snap.child("status").val()];
           table.rows.add([dataSet]).draw();
         }
@@ -601,7 +610,7 @@ var viewAppointment = function(){
       ref.on("child_added", snapShot => {
         if(snap.child("status").val() == "Confirmed"){
           var dataSet = [snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), snap.child("TypeOfReport").val(), snap.child("street").val(), snap.child("barangay").val(), 
-          snap.child("city").val(), snap.child("date").val(),snap.child("time").val(), snap.child("description").val(), 
+          snap.child("city").val(), snap.child("date").val(),snap.child("time").val(), snap.child("description").val(),  snap.child("has_consent").val(),
           snap.child("status").val()];
           table.rows.add([dataSet]).draw();
         }
@@ -1067,8 +1076,8 @@ $(document).ready(function(){
     
     var rootRef = firebase.database().ref().child("Reports");
     console.log(data);
-    var status = data[8] == 'Confirmed' ? 'Unconfirmed' : 'Confirmed'; 
-    var statusTxt = (data[8] == "Confirmed" ? "Cancel" : "Confirm"); 
+    var status = data[10] == 'Confirmed' ? 'Unconfirmed' : 'Confirmed'; 
+    var statusTxt = (data[10] == "Confirmed" ? "Cancel" : "Confirm"); 
     console.log(status);
     console.log(statusTxt);
     Swal.fire({
@@ -1095,8 +1104,137 @@ $(document).ready(function(){
       });
       
   });
-  
+
+  // hide dashboard when on user
+  var storageUserRole = localStorage.getItem("site_role");
+
+  if(storageUserRole == "User"){
+    $("#dashboard").addClass("d-none");
+  }else{
+    $("#dashboard").addClass("d-block");
+  }
+
+
 });
+
+
+
+var getUserChart = function(){
+   // REPORT CHart
+   var activeCnt = 1;
+   var inactiveCnt = 1;
+   var active;
+   var inactive;
+   var rootRef = firebase.database().ref().child("Users");
+   rootRef.on("child_added", snap => {
+     if(snap.child("is_active").val() == "yes"){
+       active = activeCnt;
+       activeCnt++;
+     }else{
+      inactive = inactiveCnt;
+      inactiveCnt++;
+     }
+     // Our labels along the x-axis
+     var dataUser = [active, inactive];
+     var ctxUsers = document.getElementById("usersChart").getContext("2d");  
+      if(window.pie != undefined)
+      window.pie.destroy();
+      window.pie = new Chart(ctxUsers, {
+        type: 'pie',
+        data: {
+          labels: [
+            "Active",
+            "Inactive"
+          ],
+          datasets: [
+            { 
+              data: dataUser,
+              backgroundColor: "#FFB400",
+            }
+          ]
+        }
+      });
+   });
+}
+var getReportChart = function(){
+   // REPORT CHart
+   var countCatCalling = 1;
+   var countGroping = 1;
+   var countWolfWhistling = 1;
+   var countIndecency = 1;
+   var catcalling;
+   var groping;
+   var wolfWhistling;
+   var indecency;
+   var rootRef = firebase.database().ref().child("Reports");
+   rootRef.on("child_added", snap => {
+     if(snap.child("TypeOfReport").val() == "Cat calling"){
+       catcalling = countCatCalling;
+       countCatCalling++;
+     }else if(snap.child("TypeOfReport").val() == "Groping"){
+       groping = countGroping;
+       countGroping++;
+     }else if(snap.child("TypeOfReport").val() == "Wolf whistling"){
+       wolfWhistling = countWolfWhistling;
+       countWolfWhistling++;
+     }else if(snap.child("TypeOfReport").val() == "Public indecency"){
+       indecency = countIndecency;
+       countIndecency++;
+     }
+     console.log("cat" + countCatCalling);
+     // Our labels along the x-axis
+     var typeOfReport = ["Cat Calling", "Groping", "Wolf Whistling", "Public indecency"];
+     var ctxReport = document.getElementById("reportsChart").getContext("2d");  
+      if(window.bar != undefined)
+      window.bar.destroy();
+      window.bar = new Chart(ctxReport, {
+        type: 'horizontalBar',
+        data: {
+              labels: typeOfReport,
+              datasets: [{
+                label: 'Type of Report',
+                backgroundColor: "#F02E05",
+                data: [catcalling, groping, wolfWhistling, indecency]
+              }],
+            },
+      });
+   });
+}
+
+var getUserCount = function(){
+  // count users and display on dashboard
+  var rootRef = firebase.database().ref().child("Users");
+  rootRef.once('value', function(snap) {
+    $(".count-users").html(snap.numChildren());
+  });
+}
+
+var getAppointmentCount = function(){
+  var count = 0;
+  var holder;
+  var rootRef = firebase.database().ref().child("Reports");
+  rootRef.on("child_added", snap => {
+    if(snap.child("status").val() == "Confirmed"){
+      holder = count;
+      count++;
+    }
+    $(".count-appointment").html(count);
+  });
+}
+
+var getReportsCount = function(){
+   var rootRef = firebase.database().ref().child("Reports");
+   rootRef.once('value', function(snap) {
+     $(".count-reports").html(snap.numChildren());
+   });
+}
+
+var getMessagesCount = function(){
+  var rootRef = firebase.database().ref().child("Messages");
+  rootRef.once('value', function(snap) {
+    $(".count-messages").html(snap.numChildren());
+  });
+}
 
 var updateAbout = function(){
   
@@ -1244,5 +1382,7 @@ var viewRatings = function(){
       table.rows.add([dataSet]).draw();
   });
 }
+
+
 
 
