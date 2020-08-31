@@ -62,7 +62,7 @@
                 <a class="nav-link" href="manage-projects.html" data-toggle="modal" data-target=".report-incident">
                     <i class="fas fa-plus-square"></i>
                     <span>Report an Incident</span></a>
-                <div class="modal fade report-incident" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                <div class="modal fade report-incident" id="appointment-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -253,6 +253,125 @@
                 </div>
             </footer>
         </div>
+
+        <!-- Edit MOdal -->
+            <div class="modal fade edit-report-incident" id="appointment-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6>Edit Report an Incident</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <!-- type of report -->
+                                <div class="row">
+                                    <div class="col-lg-4 d-none user-select-form">
+                                        <label for="user">User</label>
+                                        <select name="user" id="edit-user" class="form-control">
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="typeOfReport">Type of Report</label>
+                                            <select name="typeOfReport" id="edit-typeOfReport" class="form-control">
+                                                <option value="Cat calling">Cat calling</option>
+                                                <option value="Groping">Groping</option>
+                                                <option value="Wolf whistling">Wolf whistling</option>
+                                                <option value="Public indecency">Public indecency</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- location -->
+                                <div class="row mb-3">
+                                    <div class="col-lg-12">
+                                        <span>Location</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <input type="text" name="street" id="edit-street" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <input type="text" name="barangay" id="edit-barangay" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <input type="text" name="city" id="edit-city" placeholder="Pasig City"
+                                                class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- date -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <span><strong>Schedule your appointment</strong></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="date">Date</label>
+                                            <input type="date" name="date" id="edit-date" placeholder="date"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="time">Time</label>
+                                            <input type="time" name="time" id="edit-time" placeholder="time"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- description of report-->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="descriptionOfReport">Description</label>
+                                            <textarea name="descriptionOfReport" id="edit-descriptionOfReport" cols="30"
+                                                rows="5" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="typeOfReport">Has Consent?</label>
+                                            <select name="typeOfReport" id="edit-consent" class="form-control">
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="edit-consent">
+                                            <label class="form-check-label" for="consent">
+                                                I agree to let GAD post my story on their website.
+                                            </label>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btn-edit-report">Edit Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <!-- /.content-wrapper -->
     </div>
     <!-- /#wrapper -->

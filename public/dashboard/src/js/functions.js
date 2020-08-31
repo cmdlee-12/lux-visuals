@@ -543,8 +543,8 @@ var viewReports = function(){
       var ref = firebase.database().ref().child("Users").orderByChild("userID").equalTo(userID);
       ref.on("child_added", snapShot => {
         var status = snap.child('status').val();
-        var btnIcon = status == "Confirmed" ? "danger fas fa-minus-circle" : "warning fas fa-edit";
-        var btnHtml = '<button type="button" class="btn btn-sm '+ btnIcon + '" > </button>';
+        var btnIcon = status == "Confirmed" ? "danger fas fa-minus-circle" : "warning fas fa-check";
+        var btnHtml = '<button type="button" class="btn btn-confirm btn-sm '+ btnIcon + '" > </button>  <button type="button" class="btn btn-delete btn-sm btn-danger fas fa-trash "> </button><button type="button" class="btn btn-edit btn-sm btn-info fas fa-edit " data-toggle="modal" data-target=".edit-report-incident"></button>';
         var dataSet = [
           snap.child('id').val(),
           snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), 
@@ -1071,13 +1071,13 @@ $(document).ready(function(){
   });
   
   // confirming reports
-  $('#reportTable tbody').on( 'click', 'button', function () {
+  $('#reportTable tbody').on( 'click', '.btn-confirm', function () {
     var data = reportsTable.row( $(this).parents('tr') ).data();
     
     var rootRef = firebase.database().ref().child("Reports");
     console.log(data);
-    var status = data[10] == 'Confirmed' ? 'Unconfirmed' : 'Confirmed'; 
-    var statusTxt = (data[10] == "Confirmed" ? "Cancel" : "Confirm"); 
+    var status = data[9] == 'Confirmed' ? 'Unconfirmed' : 'Confirmed'; 
+    var statusTxt = (data[9] == "Confirmed" ? "Unconfirmed" : "Confirm"); 
     console.log(status);
     console.log(statusTxt);
     Swal.fire({
@@ -1102,6 +1102,105 @@ $(document).ready(function(){
             viewReports();
           }
       });
+      
+  });
+  // removing reports
+  $('#reportTable tbody').on( 'click', '.btn-delete', function () {
+    var data = reportsTable.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("Reports");
+    console.log(data);  
+    // console.log(status);
+    // console.log(statusTxt);
+    Swal.fire({
+          title: 'Are you sure want to delete the appointment?',
+          text: "Check all details before confirming it!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Delete'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Confirmed!',
+              data[1] +'\'s ' +'appointment has been deleted',
+              'success'
+            )
+            
+            rootRef.child(data[0]).remove();
+            // console.log(reportID)
+            
+            viewReports();
+          }
+      });
+      
+  });
+  
+  // editing reports
+  $('#reportTable tbody').on( 'click', '.btn-edit', function () {
+    var data = reportsTable.row( $(this).parents('tr') ).data();
+    
+    var rootRef = firebase.database().ref().child("Reports"); 
+
+    $("#edit-typeOfReport").val(data[2]); 
+    $("#edit-street").val(data[3]);
+    $("#edit-barangay").val(data[4]);
+    $("#edit-date").val(data[5]);
+    $("#edit-time").val(data[6]);
+    $("#edit-descriptionOfReport").val(data[7]);
+    $("#edit-consent").val(data[8]);
+     
+    
+    // console.log(data);  
+    // console.log(status);
+    // console.log(statusTxt);
+    $(".btn-edit-report").click(function(e){
+      console.log(data);
+        var editData = {
+          typeOfReport : $("#edit-typeOfReport").val(),
+          street : $("#edit-street").val(),
+          barangay : $("#edit-barangay").val(),
+          date : $("#edit-date").val(),
+          time : $("#edit-time").val(),
+          description : $("#edit-descriptionOfReport").val(),
+          consent : $("#edit-consent").val(),
+        }
+        console.log(editData);
+        
+        Swal.fire({
+          title: 'Are you sure want to update the appointment?',
+          text: "Check all details before confirming it!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#008000',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Update'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Confirmed!',
+              data[1] +'\'s ' +'appointment has been updated',
+              'success'
+            )
+            
+          rootRef.child(data[0]).update(
+            {
+              'TypeOfReport' : editData.typeOfReport,
+              'street' : editData.street,
+              'barangay' : editData.barangay,
+              'date' : editData.date,
+              'time' : editData.time,
+              'description' : editData.description,
+              'has_consent' : editData.consent,
+            });
+            // console.log(reportID)
+            
+            viewReports();
+          }
+      });
+    });
+    
       
   });
 
