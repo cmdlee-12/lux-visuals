@@ -566,7 +566,7 @@ var viewReports = function(){
           var status = snap.child('status').val();
           console.log(status)
           var btnIcon = status == "Confirmed" ? "btn-danger fas fa-minus-circle" : "btn-warning fas fa-edit";
-          var btnHtml = '<button type="button" class="btn btn-sm '+ btnIcon + '" > </button>';
+          var btnHtml = '<button type="button" class="btn btn-confirm btn-sm '+ btnIcon + '" > </button>  <button type="button" class="btn btn-delete btn-sm btn-danger fas fa-trash "> </button><button type="button" class="btn btn-edit btn-sm btn-info fas fa-edit " data-toggle="modal" data-target=".edit-report-incident"></button>';
 
           var dataSet = [
             snap.child('id').val(),snapShot.child("userFirstName").val()+ " "+ snapShot.child("userLastName").val(), snap.child("TypeOfReport").val(), snap.child("street").val(), snap.child("barangay").val(), 
